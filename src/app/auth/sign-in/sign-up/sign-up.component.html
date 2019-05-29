@@ -1,0 +1,135 @@
+<mat-toolbar>
+  <img id="whiteLogo" src="assets/images/white_logo.png" alt="ипмкн лого">
+  <div id="vert-line"></div>
+  <span class="header-text" id="ipmkn-text">ИПМКН</span>
+  <span class="header-text" id="disc-text">Учебные дисциплины</span>
+  
+  <span class="flex-grow"></span>
+
+  <div id="add-stud">
+    <button mat-button routerLink="/auth/sign-up">
+      <div id="user-logo"></div>
+      <span id="reg-student-text">Регистрация студента</span>
+    </button>
+  </div>
+
+</mat-toolbar>
+
+<div id="content">
+
+<div id="login-form">
+<mat-card class="mat-login"> 
+  <i class="material-icons" id="close-btn" routerLink="/auth">close</i>
+  <mat-card-title style="text-align:center; margin: 0 0 15px 0">
+      <i id="in-icon" class="material-icons">person_add</i>
+    Регистрация студента
+  </mat-card-title>
+  <mat-card-content style="margin-bottom: 5px;">
+    <form #registerForm='ngForm' [formGroup]="form" (ngSubmit)="register()">
+      <mat-form-field style="width:220px">
+        <input required class="log-input"  type="text" matInput placeholder="Логин"
+        autocomplete="off" name="username" formControlName="username">
+      </mat-form-field>
+      
+      <mat-form-field style="width:220px; margin-left: 50px;">
+        <input required class="log-input"  type="email" matInput placeholder="Email"
+        autocomplete="off" formControlName="email">
+      </mat-form-field>
+
+      <br>
+      <mat-form-field style="width:220px">
+        <input required class="log-input" type="text" matInput placeholder="Фамилия"
+        autocomplete="off" formControlName="firstName">
+      </mat-form-field>
+
+      <mat-form-field style="width:220px; margin-left: 50px;">
+        <input required class="log-input" type="text" matInput placeholder="Имя"
+        autocomplete="off" formControlName="lastName">
+      </mat-form-field>
+
+      <br>
+      <mat-form-field style="width:220px">
+        <input required class="log-input" type="text" matInput placeholder="Отчество"
+        autocomplete="off" formControlName="patronymic">
+      </mat-form-field>
+     
+      <mat-form-field style="width:220px; margin-left: 50px;">
+        <input 
+          required 
+          type="text" 
+          class="log-input" 
+          placeholder="Поток" 
+          aria-label="Flow"
+          matInput 
+          [matAutocomplete]="studyFlow" 
+          formControlName="studyFlow"
+        >
+
+        <mat-autocomplete 
+          #studyFlow="matAutocomplete" 
+          (optionSelected)="onStudyFlowSelected($event)"
+        >
+          <mat-option *ngFor="let flowOption of $flowsOptions | async" [value]="flowOption">
+            {{flowOption}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <br>
+      <mat-form-field style="margin-bottom: 30px; width:220px">
+        <input required class="log-input" type="password" matInput placeholder="Пароль"
+        name="password" passwordToggle formControlName="password">
+      </mat-form-field>
+
+      <mat-form-field style="width:100px; margin-left: 50px;">
+          <input
+          disable
+          required
+          type="text"
+          class="log-input"
+          placeholder="Группа"
+          aria-label="Group"
+          matInput
+          [matAutocomplete]="group"
+          formControlName="group"
+          >
+            <mat-autocomplete #group="matAutocomplete"
+            (optionSelected)="onGroupSelected($event)">
+                <mat-option *ngFor="let groupOption of $groupsOptions | async" [value]="groupOption">
+                  {{groupOption}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field style="width:100px; margin-left: 20px;">
+            <input
+            required
+            type="text"
+            class="log-input"
+            placeholder="Подгруппа"
+            aria-label="SubGroup"
+            matInput
+            [matAutocomplete]="subGroup"
+            formControlName="subGroup">
+              <mat-autocomplete #subGroup="matAutocomplete">
+                  <mat-option *ngFor="let subGroupOption of $subGroupsOptions | async" [value]="subGroupOption">
+                    {{subGroupOption}}
+                  </mat-option>
+              </mat-autocomplete>
+        </mat-form-field>
+      
+      <div class="alert alert-danger" *ngIf="formError">{{formError}}</div>
+      <br>
+      <button [disabled]="!registerForm.valid" class="log-but" type="submit" mat-flat-button>
+        Зарегистрироваться
+      </button>
+    </form>
+    <button  id="back-btn" routerLink="/auth" mat-stroked-button>
+      Назад
+    </button>
+  </mat-card-content>
+</mat-card>
+</div>
+</div>
+
+<router-outlet></router-outlet>

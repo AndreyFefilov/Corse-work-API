@@ -1,0 +1,165 @@
+.flex-grow{
+    flex-grow: 1;
+}
+
+#whiteLogo{
+    bottom: 1px;
+    width: 50px;
+    margin-right: 25px;
+}
+
+.mat-toolbar {
+    height: 70px;
+    color: white;
+    box-shadow: 0 0.17em 5px rgba(122,122,122,0.5);
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+.header-text{
+    color: white;
+}
+
+#disc-text{
+    font-size: 24px;
+    position: relative;
+    left: -65px;
+    top: 15px;
+    font-family:  Roboto-Regular, sans-serif;
+}
+
+#ipmkn-text{
+    font-size: 18px;
+    position: relative;
+    left: -3px;
+    bottom: 15px;
+    font-family:  Roboto-Regular, sans-serif;
+}
+
+#vert-line{
+    width: 1.5px;
+    height: 80%;
+    background-color: white;
+    margin-right: 25px;
+}
+
+#user-logo{
+    display: block;
+    background: url(../../../../assets/images/Auth/add_user.png);
+    background-size: 20px 20px;
+    height: 20px;
+    width: 20px;
+    float: left;
+    position: relative;
+    bottom: -8px;
+    transition: 0.2s;
+    z-index: 2;
+}
+
+#reg-student-text{
+    position: relative;
+    font-size: 16px;
+    transition: 0.4s;
+    z-index: 1;
+    margin-left: 9px;
+    font-family:  Roboto-Light, sans-serif;
+}
+
+#add-stud:hover {
+    #reg-student-text{
+        color: #d7d7d7;
+    }
+    #user-logo{
+        background: url(../../../../assets/images/Auth/add_user_hover.png);
+        background-size: 25px 25px;
+        height: 25px;
+        width: 25px;
+        bottom: -5px;
+    }
+}
+
+#in-icon{
+    position: relative;
+    top: 6px;
+    font-size: 30px;
+}
+ 
+  .log-but {
+    background-color: #0671b8; 
+    color: white;
+    font-size: 16px;
+    font-family:  Roboto-Regular, sans-serif;
+  }
+
+  .log-but:hover {
+    background-color: #0867a7; 
+  }
+
+#back-btn{
+    font-size: 16px;
+    float: right;
+    position: relative;
+    bottom: 35px;
+}
+
+  .log-input{
+    font-size: 16px;
+  }
+
+.mat-form-field-wrapper{
+    position: relative;
+    left: -10px;
+}
+
+  #content{
+      display: flex;
+      height: 88vh;
+  }
+  #login-form{
+    width: 600px;
+    margin: auto;
+    opacity:0; 
+	transition: 0.7s; 
+	
+	animation: show 0.7s 1; /* Указываем название анимации, её время и количество повторов*/
+    animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
+    //animation-delay: 1s; /* Задержка перед началом */
+    @keyframes show{
+        0%{
+            opacity:0;
+        }
+        
+        
+        100% {
+            opacity:1;
+        }
+   }
+  }
+
+  .mat-login{
+    padding: 20px 35px 15px 35px;
+  }
+
+  .mat-form-field{
+      width: 250px;
+      position: relative;
+      left: 20px;
+  }
+
+  #close-btn{
+      position: relative;
+      float: right;
+      opacity: 0.4;
+      left: 23px;
+      top: -10px;
+  }
+
+  #close-btn:hover{
+      opacity: 1;
+      cursor: pointer;
+      outline: 0 none !important;
+      transition: 0.3s;
+  }
+  .mat-card-content{
+      font-size: 16px;
+  }

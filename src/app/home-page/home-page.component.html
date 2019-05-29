@@ -1,0 +1,41 @@
+<div id="menu-content">
+    <div id="menu-blue-div">
+
+        <div style="display: inline-block; height: 40px;">
+            <img id="whiteLogo" src="assets/images/white_logo.png" alt="ипмкн лого">
+        </div>
+
+        <div  id="vert-line" style="display: inline-block;"></div>
+
+        <div style="display: inline-block; height: 40px; clear: both;">
+            <span class="header-text" id="disc-text">Учебные дисциплины</span>
+        </div>
+
+        <img id="logout-icon" src="assets/images/logout.png" alt="иконка выхода"
+        (click)="logout()">
+
+    </div>
+
+    <div id="menu-white-div">
+        <div id="select-course-block" style="color:grey">
+            Тут будем предмет выбирать
+        </div>
+
+        <div
+            class="menu-item"
+            *ngFor="let item of menuItems"
+            (click)="selectedItem = item.value"
+            [ngClass]="{'selected': item.value === selectedItem }"
+        >
+            <span (click)="navigate(item.value)">{{item.text}}</span>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    <router-outlet></router-outlet>
+</div>
+
+
+  
