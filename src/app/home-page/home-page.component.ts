@@ -19,7 +19,7 @@ export class HomePageComponent implements OnInit {
       text: 'Занятия'
     },
     {
-      value: 'tests',
+      value: 'exams',
       text: 'Контрольные мероприятия'
     },
     {
