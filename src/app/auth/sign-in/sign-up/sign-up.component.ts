@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { mergeMap, map, startWith, tap } from 'rxjs/operators';
 import { ClusterService } from '../../../_services/cluster.service';
 import { Cluster } from 'src/app/shared/models/cluster.model';
-import { Student } from 'src/app/shared/models/student.model';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,7 +15,7 @@ import { Student } from 'src/app/shared/models/student.model';
 })
 export class SignUpComponent implements OnInit {
 
-  student = new Student();
+  student = new User();
 
   constructor(
     private formBuilder: FormBuilder,

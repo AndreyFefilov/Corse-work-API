@@ -48,15 +48,30 @@
     height: 20px;
     width: 21px;
     float: right;
-    filter:brightness(0) invert(1);
-    transition: 0.3s;
+    transition: 0.5s;
     margin-top: 20px;  
 }
 
 #logout-icon:hover {
     cursor: pointer;
-    filter:brightness(1) invert(0);
+    filter:brightness(1) invert(1);
 }
+
+#add-icon {
+    position: relative;
+    transition: 0.1s;
+    font-size: 29px;
+    color: rgb(117, 117, 117);
+    float: right;
+    bottom: 2px;
+    right: 2px;
+}
+
+#add-icon:hover {
+    cursor: pointer;
+    color: #0b7cc7;
+}
+
 
 .menu-item  {
     position: relative;
@@ -94,7 +109,7 @@
     align-items: flex-end;
     text-align: center;
     justify-content: center;
-    background-color: rgb(235, 246, 255);
+    background-color: rgb(238, 247, 255);
     word-spacing: 60px;
     //white-space: pre-wrap;
 }
@@ -102,7 +117,7 @@
 .menu-item:hover {
     color: rgb(36, 36, 36);
     cursor: pointer;
-    background-color: rgb(235, 246, 255);
+    background-color: rgb(238, 247, 255);
    //white-space: pre-wrap;
 }
 

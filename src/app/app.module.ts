@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
+
 import {
   MatButtonModule,
   MatCardModule,
@@ -11,7 +13,10 @@ import {
   MatIconModule,
   MatMenuModule,
   MatProgressBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatAutocompleteModule
 } from '@angular/material';
 
 import { RouterModule } from '@angular/router';
@@ -21,6 +26,8 @@ import { routes } from './app-routing.module';
 import { ClusterService } from './_services/cluster.service';
 import { DisciplineComponent } from './home-page/discipline/discipline.component';
 import { ClassesComponent } from './home-page/classes/classes.component';
+import { CourseDialogComponent } from './home-page/course-dialog/course-dialog.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
    declarations: [
@@ -28,6 +35,7 @@ import { ClassesComponent } from './home-page/classes/classes.component';
       HomePageComponent,
       DisciplineComponent,
       ClassesComponent,
+      CourseDialogComponent,
    ],
    imports: [
       BrowserModule,
@@ -37,15 +45,25 @@ import { ClassesComponent } from './home-page/classes/classes.component';
       MatButtonModule,
 
       MatToolbarModule,
-      MatButtonModule,
       MatIconModule,
       MatMenuModule,
       MatDividerModule,
       MatProgressBarModule,
       MatCardModule,
+      MatDialogModule,
+      MatFormFieldModule,
+      ReactiveFormsModule,
+      CommonModule,
+      MatInputModule,
+      MatAutocompleteModule,
 
       RouterModule.forRoot(routes)
    ],
+
+   entryComponents: [
+      CourseDialogComponent,
+   ],
+
    bootstrap: [
       AppComponent
    ]

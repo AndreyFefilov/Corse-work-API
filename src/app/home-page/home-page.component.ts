@@ -1,6 +1,9 @@
+import { MatDialog } from '@angular/material/dialog';
+import { UserService } from './../_services/user.service';
 import { AuthService } from './../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, Route, ActivatedRoute } from '@angular/router';
+import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 
 @Component({
   selector: 'app-home-page',
@@ -8,6 +11,7 @@ import { Router, Route, ActivatedRoute } from '@angular/router';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
+
 
   menuItems = [
     {
@@ -46,7 +50,12 @@ export class HomePageComponent implements OnInit {
 
   selectedItem: string;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit() {}
 
@@ -61,8 +70,20 @@ export class HomePageComponent implements OnInit {
     this.router.navigate(['/auth']);
   }
 
+    // this.userService.me;
+
   navigate(childRoute) {
     this.router.navigate([`/${childRoute}`], { relativeTo: this.route });
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(CourseDialogComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
 }
+
