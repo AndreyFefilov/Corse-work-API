@@ -12,7 +12,6 @@ export class ClusterService {
     constructor(private http: HttpClient) { }
 
     getAllClusters(): Observable<Cluster[]> {
-
         return this.http.get('http://localhost:5000/api/Clusters/get-clusters')
             .pipe(
                 map((clusters: ICluster[]) => clusters

@@ -19,6 +19,10 @@ export class HomePageComponent implements OnInit {
     'Имит. моделирование'
   ];
 
+  firstName: string;
+  lastName: string;
+  patronymic: string;
+
   menuItems = [
     {
       value: 'discipline',
@@ -60,14 +64,18 @@ export class HomePageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
+    private authService: AuthService,
     public dialog: MatDialog,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.firstName = this.authService.decodedToken.family_name;
+    this.lastName = this.authService.decodedToken.unique_name.substr(0, 1);
+    this.patronymic = this.authService.decodedToken.given_name.substr(0, 1);
+  }
 
   loggedIn() {
-    const token = localStorage.getItem('token');
-    return !!token;
+    return this.authService.loggedIn();
   }
 
   logout() {
@@ -87,7 +95,7 @@ export class HomePageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog "Create course" was closed');
     });
   }
 

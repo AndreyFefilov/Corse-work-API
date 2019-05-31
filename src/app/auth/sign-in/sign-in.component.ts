@@ -1,8 +1,11 @@
+import { AlertifyService } from './../../_services/alertify.service';
 import { UserService } from './../../_services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from './../../_services/auth.service';
 import { User } from 'src/app/shared/models/user.model';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-in',
@@ -17,7 +20,10 @@ export class SignInComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private alertify: AlertifyService,
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -28,13 +34,16 @@ export class SignInComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.model).subscribe(next => {
-      const user = {}; // Create user
+    this.authService.login(this.model).subscribe(token => {
+      this.alertify.success('Вход успешно выполнен');
 
-      this.userService.me = user;
-      console.log('error');
+      this.userService.getUser(token).subscribe(user => {
+        this.userService.me = user;
+        this.router.navigate(['']);
+        console.log(this.userService.me);
+      });
     }, error => {
-      console.log('login is FAIL!');
+      this.alertify.error('Неправильный логин/почта или пароль');
     });
   }
 

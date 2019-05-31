@@ -1,3 +1,4 @@
+import { AlertifyService } from './../../../_services/alertify.service';
 import { AuthService } from './../../../_services/auth.service';
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,7 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 import { mergeMap, map, startWith, tap } from 'rxjs/operators';
 import { ClusterService } from '../../../_services/cluster.service';
 import { Cluster } from 'src/app/shared/models/cluster.model';
-import { User } from 'src/app/shared/models/user.model';
+import { RegStudent } from 'src/app/shared/models/reg.student.model';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,12 +16,11 @@ import { User } from 'src/app/shared/models/user.model';
 })
 export class SignUpComponent implements OnInit {
 
-  student = new User();
-
   constructor(
     private formBuilder: FormBuilder,
     private clusterSrv: ClusterService,
-    private authService: AuthService
+    private authService: AuthService,
+    private alertify: AlertifyService
   ) { }
 
   form: FormGroup;
@@ -159,21 +159,24 @@ export class SignUpComponent implements OnInit {
   }
 
   register() {
+    const student = new RegStudent();
     this.clusterKey = this.form.controls.studyFlow.value + this.form.controls.group.value + this.form.controls.subGroup.value;
 
-    this.student.username = this.form.controls.username.value;
-    this.student.email = this.form.controls.email.value;
-    this.student.firstname = this.form.controls.firstName.value;
-    this.student.lastname = this.form.controls.lastName.value;
-    this.student.patronymic = this.form.controls.patronymic.value;
-    this.student.password = this.form.controls.password.value;
-    this.student.clusterId = this.clusterIdMap.get(this.clusterKey);
-    console.log(this.student);
+    student.username = this.form.controls.username.value,
+    student.email = this.form.controls.email.value,
+    student.firstName = this.form.controls.firstName.value,
+    student.lastName = this.form.controls.lastName.value,
+    student.patronymic = this.form.controls.patronymic.value,
+    student.password = this.form.controls.password.value,
+    student.clusterId = this.clusterIdMap.get(this.clusterKey),
 
-    this.authService.register(this.student).subscribe(() => {
-      console.log('Registration successful');
+
+    console.log(student);
+
+    this.authService.register(student).subscribe(() => {
+      this.alertify.success('Регистрация прошла успешно');
     }, error => {
-      console.log('Fail in registration');
+      this.alertify.error('Ошибка регистрации');
     });
   }
 

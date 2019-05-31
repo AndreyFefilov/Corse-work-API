@@ -11,6 +11,15 @@
             <span class="header-text" id="disc-text">Учебные дисциплины</span>
         </div>
 
+        <div style="float: left; position: relative; top: 13px;">
+            ФОТО
+        </div>
+
+        <div *ngIf="loggedIn()" id="username">
+            <a>{{firstName}} {{lastName}}.{{patronymic}}.</a>
+        </div>
+
+
         <img id="logout-icon" src="assets/images/logout.png" alt="иконка выхода"
         (click)="logout()">
 

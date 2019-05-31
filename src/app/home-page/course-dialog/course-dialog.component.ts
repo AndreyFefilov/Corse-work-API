@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { User } from 'src/app/shared/models/user.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-course-dialog',
@@ -11,10 +12,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 export class CourseDialogComponent implements OnInit {
 
-  user = new User();
   form: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
+              private alertify: AlertifyService,
               public dialogRef: MatDialogRef<CourseDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -27,6 +28,7 @@ export class CourseDialogComponent implements OnInit {
 
   createCourse() {
     this.dialogRef.close();
+    this.alertify.success(`Дисциплина "${this.form.controls.name.value}" успешно создана`);
   }
 
   closeDialog() {
