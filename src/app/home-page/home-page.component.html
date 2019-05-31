@@ -17,8 +17,15 @@
     </div>
 
     <div id="menu-white-div">
-        <div id="select-course-block" style="color:grey">
-            Тут будем предмет выбирать
+        <div id="select-course-block">
+            <mat-form-field style="width: 215px; color: rgb(163, 163, 163); font-size: 15px;">
+                <mat-label>Выбор дисциплины</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let course of courses" [value]="course">
+                            {{course}}
+                        </mat-option>
+                </mat-select>
+            </mat-form-field>
 
             <i class="material-icons" id="add-icon"
             (click)="openDialog()">add</i>

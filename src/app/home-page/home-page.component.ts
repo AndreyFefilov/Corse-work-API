@@ -12,6 +12,12 @@ import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 })
 export class HomePageComponent implements OnInit {
 
+  courses: string[] = [
+    'Базы данных',
+    'ООАП',
+    'Сис. прог. 2',
+    'Имит. моделирование'
+  ];
 
   menuItems = [
     {

@@ -32,7 +32,7 @@ export class SignInComponent implements OnInit {
       const user = {}; // Create user
 
       this.userService.me = user;
-      console.log('login is success');
+      console.log('error');
     }, error => {
       console.log('login is FAIL!');
     });

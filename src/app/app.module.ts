@@ -16,7 +16,9 @@ import {
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatSelect,
+  MatSelectModule
 } from '@angular/material';
 
 import { RouterModule } from '@angular/router';
@@ -28,6 +30,7 @@ import { DisciplineComponent } from './home-page/discipline/discipline.component
 import { ClassesComponent } from './home-page/classes/classes.component';
 import { CourseDialogComponent } from './home-page/course-dialog/course-dialog.component';
 import { CommonModule } from '@angular/common';
+import { ErrorInterceptorProvider } from './_services/error.interceptor';
 
 @NgModule({
    declarations: [
@@ -56,8 +59,13 @@ import { CommonModule } from '@angular/common';
       CommonModule,
       MatInputModule,
       MatAutocompleteModule,
+      MatSelectModule,
 
       RouterModule.forRoot(routes)
+   ],
+
+   providers: [
+      ErrorInterceptorProvider
    ],
 
    entryComponents: [

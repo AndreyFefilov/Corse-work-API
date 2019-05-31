@@ -1,4 +1,4 @@
-<h1 mat-dialog-title style="margin-bottom: 0;">Создание новой дисциплины</h1>
+<h1 mat-dialog-title style="margin-bottom: 0;">Новая дисциплина</h1>
 <form #courseDialog="ngForm" [formGroup]="form" (ngSubmit)="createCourse()">
 <i class="material-icons" id="close-btn" (click)="closeDialog()">close</i>
 <div mat-dialog-content style="width: 400px; padding-right: 0;">
@@ -10,7 +10,7 @@
     placeholder="Название"
     autocomplete="off">  
   </mat-form-field>
-  <p id="recomend-text">(Используйте сокращённое название)</p>
+  <p id="recomend-text">(Рекомендуется использовать сокращённое название)</p>
 
   <mat-form-field style="width: 320px;">
     <textarea
