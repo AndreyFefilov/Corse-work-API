@@ -39,6 +39,7 @@ export class SignUpComponent implements OnInit {
   private clusterKey: string;
 
   subs: Subscription;
+  student = new RegStudent();
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -159,21 +160,19 @@ export class SignUpComponent implements OnInit {
   }
 
   register() {
-    const student = new RegStudent();
     this.clusterKey = this.form.controls.studyFlow.value + this.form.controls.group.value + this.form.controls.subGroup.value;
 
-    student.username = this.form.controls.username.value,
-    student.email = this.form.controls.email.value,
-    student.firstName = this.form.controls.firstName.value,
-    student.lastName = this.form.controls.lastName.value,
-    student.patronymic = this.form.controls.patronymic.value,
-    student.password = this.form.controls.password.value,
-    student.clusterId = this.clusterIdMap.get(this.clusterKey),
+    this.student.username = this.form.controls.username.value,
+    this.student.email = this.form.controls.email.value,
+    this.student.firstName = this.form.controls.firstName.value,
+    this.student.lastName = this.form.controls.lastName.value,
+    this.student.patronymic = this.form.controls.patronymic.value,
+    this.student.password = this.form.controls.password.value,
+    this.student.clusterId = this.clusterIdMap.get(this.clusterKey),
 
+    console.log(this.student);
 
-    console.log(student);
-
-    this.authService.register(student).subscribe(() => {
+    this.authService.register(this.student).subscribe(() => {
       this.alertify.success('Регистрация прошла успешно');
     }, error => {
       this.alertify.error('Ошибка регистрации');

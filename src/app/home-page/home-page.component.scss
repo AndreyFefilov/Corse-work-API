@@ -52,12 +52,12 @@
     position: absolute;
     bottom: 22px;
     left: 67px;
-    transition: 0.3s;
+    transition: 0.2s;
 }
 
 #username:hover {
     color: rgb(202, 202, 202);
-    text-decoration: underline;
+    //text-decoration: underline;
     cursor: pointer;
 }
 

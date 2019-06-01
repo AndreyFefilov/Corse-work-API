@@ -64,7 +64,7 @@ export class HomePageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
-    private authService: AuthService,
+    public authService: AuthService,
     public dialog: MatDialog,
   ) { }
 
@@ -79,9 +79,9 @@ export class HomePageComponent implements OnInit {
   }
 
   logout() {
+    this.router.navigate(['/auth']);
     localStorage.removeItem('token');
     console.log('logged out');
-    this.router.navigate(['/auth']);
   }
 
     // this.userService.me;

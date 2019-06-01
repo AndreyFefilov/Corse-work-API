@@ -5,4 +5,5 @@ export class Course {
     name: string;
     description: string;
     formula: string;
+    teacherId: number;
 }

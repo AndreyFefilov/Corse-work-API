@@ -9,19 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
     // tslint:disable-next-line:variable-name
-    private _me: any;
+    me: User;
 
-    constructor(private http: HttpClient) {
-
-    }
-
-    get me() {
-        return this._me;
-    }
-
-    set me(value: any) {
-        this._me = value;
-    }
+    constructor(private http: HttpClient) {}
 
     getUser(id: number): Observable<User> {
         return this.http.get(`http://localhost:5000/api/users/get-user/${id}`)
