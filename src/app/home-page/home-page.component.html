@@ -33,9 +33,9 @@
         <div id="select-course-block">
             <mat-form-field style="width: 215px; color: rgb(163, 163, 163); font-size: 15px;">
                 <mat-label>Выбор дисциплины</mat-label>
-                    <mat-select>
-                        <mat-option *ngFor="let course of courses" [value]="course">
-                            {{course}}
+                    <mat-select (selectionChange)="toggleSelect()">
+                        <mat-option *ngFor="let course of courseService.myCourses" [value]="course.id">
+                            {{course.name}}
                         </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -59,7 +59,27 @@
 </div>
 
 <div>
-    <router-outlet></router-outlet>
+    <ng-container *ngIf="show; else notShow">
+        <div id="welcome-block">
+            <h3 style="text-align: center;">
+                Добро пожаловать, 
+                <span style="color: #0671b8;">
+                    {{authService.decodedToken.unique_name}} 
+                {{authService.decodedToken.given_name}}
+                </span>
+            </h3>
+                <br>
+            <h4 style="text-align: center;">
+                Чтобы начать, выберите дисциплину
+            </h4>
+        </div>
+    </ng-container>
+
+<ng-template #notShow>
+    <ng-container >
+        <router-outlet></router-outlet>
+    </ng-container>
+</ng-template>
 </div>
 
 

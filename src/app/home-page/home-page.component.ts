@@ -1,6 +1,7 @@
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './../_services/user.service';
 import { AuthService } from './../_services/auth.service';
+import { CourseService } from './../_services/course.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, Route, ActivatedRoute } from '@angular/router';
 import { CourseDialogComponent } from './course-dialog/course-dialog.component';
@@ -12,16 +13,11 @@ import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 })
 export class HomePageComponent implements OnInit {
 
-  courses: string[] = [
-    'Базы данных',
-    'ООАП',
-    'Сис. прог. 2',
-    'Имит. моделирование'
-  ];
-
   firstName: string;
   lastName: string;
   patronymic: string;
+
+  show = true;
 
   menuItems = [
     {
@@ -59,6 +55,7 @@ export class HomePageComponent implements OnInit {
   ];
 
   selectedItem: string;
+  id: number = this.authService.decodedToken.nameid;
 
   constructor(
     private router: Router,
@@ -66,12 +63,65 @@ export class HomePageComponent implements OnInit {
     private userService: UserService,
     public authService: AuthService,
     public dialog: MatDialog,
+    private courseService: CourseService,
   ) { }
 
   ngOnInit() {
+
     this.firstName = this.authService.decodedToken.family_name;
     this.lastName = this.authService.decodedToken.unique_name.substr(0, 1);
     this.patronymic = this.authService.decodedToken.given_name.substr(0, 1);
+
+    this.userService.getUser(this.id).subscribe(user => {
+      this.userService.me = user;
+    });
+
+    switch (this.authService.decodedToken.role) {
+      case 'Преподаватель': {
+        this.courseService.getTeacherCourses(this.id)
+        .subscribe(courses => {
+          this.courseService.myCourses = courses;
+          this.courseService.myCourses.sort((a, b) => {
+            // tslint:disable-next-line:prefer-const
+            let aname = a.name.toLowerCase();
+            // tslint:disable-next-line:prefer-const
+            let bname = b.name.toLowerCase();
+            if (aname < bname) {
+              return -1;
+            }
+            if (aname > bname) {
+              return 1;
+            }
+          });
+        });
+        break;
+      }
+
+      case 'Студент': {
+        this.courseService.getStudentCourses(this.id)
+        .subscribe(courses => {
+          this.courseService.myCourses = courses;
+          this.courseService.myCourses.sort((a, b) => {
+            // tslint:disable-next-line:prefer-const
+            let aname = a.name.toLowerCase();
+            // tslint:disable-next-line:prefer-const
+            let bname = b.name.toLowerCase();
+            if (aname < bname) {
+              return -1;
+            }
+            if (aname > bname) {
+              return 1;
+            }
+          });
+        });
+        break;
+      }
+
+      case 'Админ': {
+        break;
+      }
+    }
+
   }
 
   loggedIn() {
@@ -84,8 +134,6 @@ export class HomePageComponent implements OnInit {
     console.log('logged out');
   }
 
-    // this.userService.me;
-
   navigate(childRoute) {
     this.router.navigate([`/${childRoute}`], { relativeTo: this.route });
   }
@@ -97,6 +145,11 @@ export class HomePageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog "Create course" was closed');
     });
+  }
+
+  toggleSelect() {
+    this.show = false;
+    console.log(this.show);
   }
 
 }

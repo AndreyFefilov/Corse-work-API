@@ -52,6 +52,7 @@ export class SignUpComponent implements OnInit {
       studyFlow: '',
       group: '',
       subGroup: '',
+
     });
 
     this.form.controls.group.disable();

@@ -4,7 +4,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertifyService } from 'src/app/_services/alertify.service';
-import { Course } from 'src/app/shared/models/course.model';
+import { NewCourse } from 'src/app/shared/models/new.course.model';
 
 @Component({
   selector: 'app-course-dialog',
@@ -15,7 +15,7 @@ import { Course } from 'src/app/shared/models/course.model';
 export class CourseDialogComponent implements OnInit {
 
   form: FormGroup;
-  course = new Course();
+  course = new NewCourse();
 
   constructor(private formBuilder: FormBuilder,
               private alertify: AlertifyService,
@@ -35,6 +35,19 @@ export class CourseDialogComponent implements OnInit {
     this.course.name = this.form.controls.name.value,
     this.course.description = this.form.controls.description.value,
     this.course.teacherId = this.userService.me.id;
+    this.courseService.myCourses.push(this.course);
+    this.courseService.myCourses.sort((a, b) => {
+      // tslint:disable-next-line:prefer-const
+      let aname = a.name.toLowerCase();
+      // tslint:disable-next-line:prefer-const
+      let bname = b.name.toLowerCase();
+      if (aname < bname) {
+        return -1;
+      }
+      if (aname > bname) {
+        return 1;
+      }
+    });
 
     console.log(this.course);
 

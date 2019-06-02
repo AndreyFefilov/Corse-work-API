@@ -81,7 +81,7 @@
     font-size: 29px;
     color: rgb(141, 141, 141);
     float: right;
-    top: 14px;
+    top: 13px;
     right: 3px;
     font-weight: lighter;
 }
@@ -142,5 +142,13 @@
 }
 
 #select-course-block {
-    margin: 7px 0 10px 15px;
+    margin: 8px 0 10px 15px;
+}
+
+#welcome-block {
+    font-family: Roboto Light,sans-serif;
+    color: rgb(68, 68, 68);
+    margin: 0 auto;
+    align-items: center;
+    padding-top: 14vh;
 }
