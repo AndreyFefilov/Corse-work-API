@@ -32,6 +32,12 @@ import { ClassesComponent } from './home-page/classes/classes.component';
 import { CourseDialogComponent } from './home-page/course-dialog/course-dialog.component';
 import { CommonModule } from '@angular/common';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
+import { ExamsComponent } from './home-page/exams/exams.component';
+import { ResultsComponent } from './home-page/results/results.component';
+import { MessagesComponent } from './home-page/messages/messages.component';
+import { ArtifactsComponent } from './home-page/artifacts/artifacts.component';
+import { MaterialsComponent } from './home-page/materials/materials.component';
+import { AdsComponent } from './home-page/ads/ads.component';
 
 @NgModule({
    declarations: [
@@ -40,6 +46,12 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
       DisciplineComponent,
       ClassesComponent,
       CourseDialogComponent,
+      ExamsComponent,
+      ResultsComponent,
+      MessagesComponent,
+      ArtifactsComponent,
+      MaterialsComponent,
+      AdsComponent,
    ],
    imports: [
       BrowserModule,

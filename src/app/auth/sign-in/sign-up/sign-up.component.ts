@@ -1,7 +1,7 @@
 import { AlertifyService } from './../../../_services/alertify.service';
 import { AuthService } from './../../../_services/auth.service';
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, Subscription } from 'rxjs';
 import { mergeMap, map, startWith, tap } from 'rxjs/operators';
@@ -43,15 +43,15 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      username: '',
-      email: '',
-      firstName: '',
-      lastName: '',
-      patronymic: '',
-      password: '',
-      studyFlow: '',
-      group: '',
-      subGroup: '',
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      patronymic: ['', Validators.required],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+      studyFlow: ['', Validators.required],
+      group: ['', Validators.required],
+      subGroup: ['', Validators.required],
 
     });
 
@@ -176,8 +176,57 @@ export class SignUpComponent implements OnInit {
     this.authService.register(this.student).subscribe(() => {
       this.alertify.success('Регистрация прошла успешно');
     }, error => {
-      this.alertify.error('Ошибка регистрации');
+      this.alertify.error('Такие логин или почта уже заняты');
     });
+  }
+
+  // Валидаторы
+
+  UsernameError() {
+    return this.form.controls.username.hasError('required') ? 'Введите логин' :
+            '';
+  }
+
+  EmailErrorMessage() {
+    return this.form.controls.email.hasError('required') ? 'Введите почту' :
+        this.form.controls.email.hasError('email') ? 'Неверный формат почты' :
+            '';
+  }
+
+  FirstNameError() {
+    return this.form.controls.firstName.hasError('required') ? 'Введите фамилию' :
+            '';
+  }
+
+  LastNameError() {
+    return this.form.controls.lastName.hasError('required') ? 'Введите имя' :
+            '';
+  }
+
+  PatronymicError() {
+    return this.form.controls.patronymic.hasError('required') ? 'Введите отчество' :
+            '';
+  }
+
+  StudyFlowError() {
+    return this.form.controls.studyFlow.hasError('required') ? 'Выберите учебный поток' :
+            '';
+  }
+
+  GroupError() {
+    return this.form.controls.group.hasError('required') ? 'Выберите учебную группу' :
+            '';
+  }
+
+  SubGroupError() {
+    return this.form.controls.subGroup.hasError('required') ? 'Выберите учебную подгруппу' :
+            '';
+  }
+
+  PasswordError() {
+    return this.form.controls.password.hasError('required') ? 'Введите пароль' :
+        this.form.controls.password.hasError('minlength') ? 'Пароль должен содержать не менее 6 символов' :
+            '';
   }
 
 }

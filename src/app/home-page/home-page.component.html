@@ -19,8 +19,14 @@
         background-color: rgb(214, 155, 46)">
         </div>
 
-        <div id="username">
+        <div *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Студент'"
+        id="username">
             <a>{{firstName}} {{lastName}}.{{patronymic}}.</a>
+        </div>
+
+        <div *ngIf="authService.decodedToken.role == 'Админ'"
+        id="username">
+            <a>{{firstName}}</a>
         </div>
 
 
@@ -33,7 +39,8 @@
         <div id="select-course-block">
             <mat-form-field style="width: 215px; color: rgb(163, 163, 163); font-size: 15px;">
                 <mat-label>Выбор дисциплины</mat-label>
-                    <mat-select (selectionChange)="toggleSelect()">
+                    <mat-select (selectionChange)="toggleSelect()"
+                    (click)="loadCourses()">
                         <mat-option *ngFor="let course of courseService.myCourses" [value]="course.id">
                             {{course.name}}
                         </mat-option>

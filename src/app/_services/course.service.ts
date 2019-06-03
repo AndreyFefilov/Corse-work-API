@@ -38,8 +38,17 @@ import { Course } from '../shared/models/course.model';
                         c.id, c.name, c.description, c.formula))
                 )
             );
-    }
+        }
 
+    getAdminCourses(): Observable<Course[]> {
+        return this.http.get('http://localhost:5000/api/courses/get-all-courses/')
+            .pipe(
+                map((courses: ICourse[]) => courses
+                    .map(c => new Course(
+                        c.id, c.name, c.description, c.formula))
+                )
+            );
+    }
 
   }
 

@@ -3,7 +3,6 @@ import { UserService } from './../../_services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from './../../_services/auth.service';
-import { User } from 'src/app/shared/models/user.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 

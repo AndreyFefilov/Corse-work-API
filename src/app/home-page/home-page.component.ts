@@ -76,6 +76,40 @@ export class HomePageComponent implements OnInit {
       this.userService.me = user;
     });
 
+    this.loadCourses();
+  }
+
+  loggedIn() {
+    return this.authService.loggedIn();
+  }
+
+  logout() {
+    this.router.navigate(['/auth']);
+    localStorage.removeItem('token');
+    console.log('logged out');
+  }
+
+  navigate(childRoute) {
+    this.router.navigate([`/${childRoute}`], { relativeTo: this.route });
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(CourseDialogComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog "Create course" was closed');
+    });
+  }
+
+  toggleSelect() {
+    this.show = false;
+    console.log(this.show);
+    this.router.navigate(['/discipline']);
+    this.selectedItem = 'discipline';
+  }
+
+  loadCourses() {
     switch (this.authService.decodedToken.role) {
       case 'Преподаватель': {
         this.courseService.getTeacherCourses(this.id)
@@ -118,38 +152,25 @@ export class HomePageComponent implements OnInit {
       }
 
       case 'Админ': {
+        this.courseService.getAdminCourses()
+        .subscribe(courses => {
+          this.courseService.myCourses = courses;
+          this.courseService.myCourses.sort((a, b) => {
+            // tslint:disable-next-line:prefer-const
+            let aname = a.name.toLowerCase();
+            // tslint:disable-next-line:prefer-const
+            let bname = b.name.toLowerCase();
+            if (aname < bname) {
+              return -1;
+            }
+            if (aname > bname) {
+              return 1;
+            }
+          });
+        });
         break;
       }
     }
-
-  }
-
-  loggedIn() {
-    return this.authService.loggedIn();
-  }
-
-  logout() {
-    this.router.navigate(['/auth']);
-    localStorage.removeItem('token');
-    console.log('logged out');
-  }
-
-  navigate(childRoute) {
-    this.router.navigate([`/${childRoute}`], { relativeTo: this.route });
-  }
-
-  openDialog() {
-    const dialogRef = this.dialog.open(CourseDialogComponent, {
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog "Create course" was closed');
-    });
-  }
-
-  toggleSelect() {
-    this.show = false;
-    console.log(this.show);
   }
 
 }

@@ -29,28 +29,38 @@
       <mat-form-field style="width:220px">
         <input required class="log-input"  type="text" matInput placeholder="Логин"
         autocomplete="off" name="username" formControlName="username">
+        <mat-error *ngIf="form.controls.username.invalid">{{UsernameError()}}</mat-error>
       </mat-form-field>
       
       <mat-form-field style="width:220px; margin-left: 50px;">
-        <input required class="log-input"  type="email" matInput placeholder="Email"
-        autocomplete="off" formControlName="email">
+        <input
+          required
+          class="log-input"
+          matInput
+          placeholder="Почта"
+          autocomplete="off"
+          formControlName="email">
+          <mat-error *ngIf="form.controls.email.invalid">{{EmailErrorMessage()}}</mat-error>
       </mat-form-field>
 
       <br>
       <mat-form-field style="width:220px">
         <input required class="log-input" type="text" matInput placeholder="Фамилия"
         autocomplete="off" formControlName="firstName">
+        <mat-error *ngIf="form.controls.firstName.invalid">{{FirstNameError()}}</mat-error>
       </mat-form-field>
 
       <mat-form-field style="width:220px; margin-left: 50px;">
         <input required class="log-input" type="text" matInput placeholder="Имя"
         autocomplete="off" formControlName="lastName">
+        <mat-error *ngIf="form.controls.lastName.invalid">{{LastNameError()}}</mat-error>
       </mat-form-field>
 
       <br>
       <mat-form-field style="width:220px">
         <input required class="log-input" type="text" matInput placeholder="Отчество"
         autocomplete="off" formControlName="patronymic">
+        <mat-error *ngIf="form.controls.patronymic.invalid">{{PatronymicError()}}</mat-error>
       </mat-form-field>
      
       <mat-form-field style="width:220px; margin-left: 50px;">
@@ -62,8 +72,9 @@
           aria-label="Flow"
           matInput 
           [matAutocomplete]="studyFlow" 
-          formControlName="studyFlow"
+          formControlName="studyFlow"    
         >
+        <mat-error *ngIf="form.controls.studyFlow.invalid">{{StudyFlowError()}}</mat-error>
 
         <mat-autocomplete 
           #studyFlow="matAutocomplete" 
@@ -79,6 +90,7 @@
       <mat-form-field style="margin-bottom: 30px; width:220px">
         <input required class="log-input" type="password" matInput placeholder="Пароль"
         name="password" passwordToggle formControlName="password">
+        <mat-error *ngIf="form.controls.password.invalid">{{PasswordError()}}</mat-error>
       </mat-form-field>
 
       <mat-form-field style="width:100px; margin-left: 50px;">
@@ -93,6 +105,7 @@
           [matAutocomplete]="group"
           formControlName="group"
           >
+          <mat-error *ngIf="form.controls.group.invalid">{{GroupError()}}</mat-error>
             <mat-autocomplete #group="matAutocomplete"
             (optionSelected)="onGroupSelected($event)">
                 <mat-option *ngFor="let groupOption of $groupsOptions | async" [value]="groupOption">
@@ -111,6 +124,7 @@
             matInput
             [matAutocomplete]="subGroup"
             formControlName="subGroup">
+            <mat-error *ngIf="form.controls.subGroup.invalid">{{SubGroupError()}}</mat-error>
               <mat-autocomplete #subGroup="matAutocomplete">
                   <mat-option *ngFor="let subGroupOption of $subGroupsOptions | async" [value]="subGroupOption">
                     {{subGroupOption}}
