@@ -1,3 +1,4 @@
+import { MaterialService } from './../_services/material.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './../_services/user.service';
 import { AuthService } from './../_services/auth.service';
@@ -64,6 +65,7 @@ export class HomePageComponent implements OnInit {
     public authService: AuthService,
     public dialog: MatDialog,
     private courseService: CourseService,
+    private materilService: MaterialService
   ) { }
 
   ngOnInit() {
@@ -104,9 +106,9 @@ export class HomePageComponent implements OnInit {
 
   toggleSelect() {
     this.show = false;
-    console.log(this.show);
     this.router.navigate(['/discipline']);
     this.selectedItem = 'discipline';
+    this.materilService.materials = [];
   }
 
   loadCourses() {
@@ -172,6 +174,10 @@ export class HomePageComponent implements OnInit {
       }
     }
   }
+
+  changeCourse(event) {
+    this.courseService.selectCourseId = event;
+}
 
 }
 

@@ -35,7 +35,14 @@ export class CourseDialogComponent implements OnInit {
     this.course.name = this.form.controls.name.value,
     this.course.description = this.form.controls.description.value,
     this.course.teacherId = this.userService.me.id;
-    this.courseService.myCourses.push(this.course);
+    console.log(this.course);
+
+    this.courseService.createCourse(this.course).subscribe(() => {
+      this.alertify.success(`Дисциплина "${this.form.controls.name.value}" успешно создана`);
+    }, error => {
+      this.alertify.error('Ошибка в создании дисциплины');
+    });
+
     this.courseService.myCourses.sort((a, b) => {
       // tslint:disable-next-line:prefer-const
       let aname = a.name.toLowerCase();
@@ -48,15 +55,8 @@ export class CourseDialogComponent implements OnInit {
         return 1;
       }
     });
-
-    console.log(this.course);
-
-    this.courseService.createCourse(this.course).subscribe(() => {
-      this.alertify.success(`Дисциплина "${this.form.controls.name.value}" успешно создана`);
-    }, error => {
-      this.alertify.error('Ошибка в создании дисциплины');
-    });
-    this.dialogRef.close();
+    console.log(this.courseService.myCourses);
+    this.closeDialog();
   }
 
 

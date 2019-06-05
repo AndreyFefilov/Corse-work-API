@@ -2,19 +2,23 @@
 <form #courseDialog="ngForm" [formGroup]="form" (ngSubmit)="createCourse()">
 <i class="material-icons" id="close-btn" (click)="closeDialog()">close</i>
 <div mat-dialog-content style="width: 400px; padding-right: 0;">
-  <mat-form-field style="width: 320px; padding-bottom: 0; margin: 0;"> 
+  <mat-form-field style="width: 350px; padding-bottom: 0; margin: 0;"> 
     <input
     required
     matInput
     formControlName="name"
     placeholder="Название"
-    autocomplete="off">  
+    autocomplete="off"
+    #input maxlength="40">
+    <mat-hint align="end">{{input.value?.length || 0}}/40</mat-hint>  
   </mat-form-field>
-  <p id="recomend-text">(Рекомендуется использовать сокращённое название)</p>
+  <p id="recomend-text">
+    (Рекомендуется использовать сокращённое название)
+  </p>
 
-  <mat-form-field style="width: 320px;">
+  <mat-form-field style="width: 350px;">
     <textarea
-      rows="4"
+      rows="5"
       matInput
       placeholder="Описание"
       formControlName="description"

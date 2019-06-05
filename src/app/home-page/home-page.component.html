@@ -11,12 +11,11 @@
             <span class="header-text" id="disc-text">Учебные дисциплины</span>
         </div>
 
-        <div style="float: left; position: relative;
-        top: 5px; border: 1px rgb(255, 255, 255) solid;
-        border-radius: 50%;
-        height: 43px;
-        width: 43px;
-        background-color: rgb(214, 155, 46)">
+        <div style="float: left; position: relative; right: 5px;
+        top: 5px; color: rgb(255, 255, 255);">
+            <i class="material-icons" style="font-size: 45px;">
+                account_circle
+            </i>
         </div>
 
         <div *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Студент'"
@@ -39,8 +38,7 @@
         <div id="select-course-block">
             <mat-form-field style="width: 215px; color: rgb(163, 163, 163); font-size: 15px;">
                 <mat-label>Выбор дисциплины</mat-label>
-                    <mat-select (selectionChange)="toggleSelect()"
-                    (click)="loadCourses()">
+                    <mat-select (selectionChange)="toggleSelect(); changeCourse($event.value)">
                         <mat-option *ngFor="let course of courseService.myCourses" [value]="course.id">
                             {{course.name}}
                         </mat-option>

@@ -17,4 +17,5 @@ export class UserService {
         return this.http.get(`http://localhost:5000/api/users/get-user/${id}`)
             .pipe(map((data: User) => new User(data)));
     }
+
 }

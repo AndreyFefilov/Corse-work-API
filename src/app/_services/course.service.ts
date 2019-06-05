@@ -10,15 +10,25 @@ import { Course } from '../shared/models/course.model';
   export class CourseService {
     baseUrl = 'http://localhost:5000/api/courses/';
 
-    decodedToken: any;
-    course: Course;
     myCourses: Course[] = [];
+    selectCourseId: number;
 
     constructor(private http: HttpClient) { }
 
-    createCourse(model: any) {
-        return this.http.post(this.baseUrl + 'create-course', model);
-    }
+    createCourse(model: any): Observable<Course> {
+        return this.http.post(this.baseUrl + 'create-course', model)
+            .pipe(
+                map((c: ICourse) => {
+                    const newCourse = new Course(
+                        c.id, c.name, c.description, c.formula
+                    );
+                    this.myCourses.push(newCourse);
+                    return newCourse;
+                    }
+                )
+            );
+        }
+
 
     getTeacherCourses(teacherId: number): Observable<Course[]> {
       return this.http.get(`http://localhost:5000/api/courses/get-teacher-courses/${teacherId}`)

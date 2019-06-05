@@ -38,6 +38,8 @@ import { MessagesComponent } from './home-page/messages/messages.component';
 import { ArtifactsComponent } from './home-page/artifacts/artifacts.component';
 import { MaterialsComponent } from './home-page/materials/materials.component';
 import { AdsComponent } from './home-page/ads/ads.component';
+import { NewMaterialComponent } from './home-page/materials/new-material/new-material.component';
+import { UpdateMaterialComponent } from './home-page/materials/update-material/update-material.component';
 
 @NgModule({
    declarations: [
@@ -52,6 +54,8 @@ import { AdsComponent } from './home-page/ads/ads.component';
       ArtifactsComponent,
       MaterialsComponent,
       AdsComponent,
+      NewMaterialComponent,
+      UpdateMaterialComponent,
    ],
    imports: [
       BrowserModule,
@@ -84,6 +88,8 @@ import { AdsComponent } from './home-page/ads/ads.component';
 
    entryComponents: [
       CourseDialogComponent,
+      NewMaterialComponent,
+      UpdateMaterialComponent
    ],
 
    bootstrap: [

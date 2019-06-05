@@ -1,3 +1,45 @@
-<p>
-  materials works!
-</p>
+<div id="content">
+  <div id="add-div">
+    <div id="add"
+    *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ'"
+    (click)="openNewDialog()"
+    >
+        <i class="material-icons" id="add-circle">
+            add_circle
+            </i>
+          <span style="font-family: Roboto Light,sans-serif;
+          margin-left: 5px;">
+            Добавить
+          </span>
+      </div>
+  </div>
+
+  <div class="mat-card-div"
+  *ngFor="let material of materialService.materials">
+    <mat-card
+    (click)="goToSite(material.link)">
+      <mat-card-title>
+          <i class="material-icons" id="link-icon">
+              link
+          </i>
+        {{material.name}}
+      </mat-card-title>
+      <div class="hover-icon"
+      *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ'">
+        <i class="material-icons"
+        (click)="deleteMaterial($event, material.id)"
+      id="close-icon">
+          delete
+        </i>
+      </div>
+      <div class="hover-icon"
+      *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ'">
+      <i class="material-icons"
+      (click)="openUpdateDialog($event, material.id, material.name, material.link)"
+      id="pen-icon">
+        create
+      </i>
+    </div>
+    </mat-card>
+  </div>
+</div>

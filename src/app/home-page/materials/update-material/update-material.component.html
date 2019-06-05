@@ -1,0 +1,36 @@
+<h1 mat-dialog-title style="margin-bottom: 0;">Изменение материала</h1>
+<form #updateMaterialDialog="ngForm" [formGroup]="form" (ngSubmit)="updateMaterial()">
+<i class="material-icons" id="close-btn" (click)="closeDialog()">close</i>
+<div mat-dialog-content style="width: 330px; padding-right: 0;">
+  <mat-form-field style="width: 300px; padding-bottom: 0; margin: 0;"> 
+    <input
+    required
+    matInput
+    formControlName="name"
+    placeholder="Название материала"
+    autocomplete="off"
+    #message maxlength="40">
+    <mat-hint align="end">{{message.value.length}} / 40</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field style="width: 300px; padding-bottom: 0; margin: 0;"> 
+      <input
+      required
+      matInput
+      formControlName="link"
+      placeholder="Ссылка на материал"
+      autocomplete="off"> 
+    </mat-form-field>
+    <p id="recomend-text">
+        (Используйте полный адрес, включаяя 'https://')
+    </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button
+    class="log-but"
+    [disabled]="!updateMaterialDialog.valid"
+    type="submit">
+      Изменить
+  </button>
+</div>
+</form>

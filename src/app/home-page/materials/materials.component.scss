@@ -1,0 +1,90 @@
+#content {
+    position: absolute;
+    left: 290px;
+    width: 78%;
+    padding: 20px 0 20px 10px;
+}
+
+#add {
+    position: relative;
+    float: left;
+    display: flex;
+    font-size: 22px;
+    color: rgb(163, 163, 163);
+    transition: 0.2s;
+}
+
+#add:hover {
+    cursor: pointer;
+    color: #0671b8;
+}
+
+.mat-card-div {
+    width: 500px;
+    display: inline-block;
+    transition: 0.2s;
+}
+
+.mat-card {
+    transition: 0.2s;
+    margin: 0 45px 40px 0;
+    z-index: 1;
+}
+
+.mat-card-title {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+#pen-icon, #close-icon {
+    color: white;
+    padding-left: 3px;
+    font-size: 24px;
+}
+
+.mat-card:hover {
+    transition: 0.2s;
+    cursor: pointer;
+    background-color: rgb(238, 247, 255);
+
+    #pen-icon, #close-icon {
+        color: rgb(207, 207, 207);
+    }
+}
+
+.hover-icon {
+    z-index: 3;
+    float: right;
+    position: relative;
+    bottom: 45px;
+    left: 12px;
+    width: auto;
+    height: auto;
+}
+
+.hover-icon:hover {
+    #pen-icon {
+        color: rgb(134, 134, 134);
+    }
+    #close-icon {
+        color: rgb(124, 75, 75);
+    }   
+}
+
+#add-div {
+    width: 100%;
+    position: relative;
+    margin-bottom: 60px;
+}
+
+#add-circle {
+    font-size: 35px;
+    display: flex;
+}
+
+#link-icon {
+    position: relative;
+    color: rgb(180, 180, 180);
+    top: 7px;
+}
+
