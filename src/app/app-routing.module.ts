@@ -1,3 +1,4 @@
+import { AuthGuard } from './_guards/auth.guard';
 import { ArtifactsComponent } from './home-page/artifacts/artifacts.component';
 import { AdsComponent } from './home-page/ads/ads.component';
 import { ClassesComponent } from './home-page/classes/classes.component';
@@ -10,9 +11,14 @@ import { MessagesComponent } from './home-page/messages/messages.component';
 import { MaterialsComponent } from './home-page/materials/materials.component';
 
 export const routes: Routes = [
+  { path: 'auth',
+    loadChildren: './auth/auth.module#AuthModule'
+  },
   {
     path: '',
     component: HomePageComponent,
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'discipline',
@@ -48,6 +54,11 @@ export const routes: Routes = [
       }
     ]
   },
-  {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
+  },
+
 ];
 

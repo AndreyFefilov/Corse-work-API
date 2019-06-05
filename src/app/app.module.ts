@@ -1,3 +1,4 @@
+import { AuthGuard } from './_guards/auth.guard';
 import { AlertifyService } from './_services/alertify.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -83,7 +84,9 @@ import { UpdateMaterialComponent } from './home-page/materials/update-material/u
 
    providers: [
       ErrorInterceptorProvider,
-      AlertifyService
+      AlertifyService,
+      AuthGuard,
+      AuthService
    ],
 
    entryComponents: [

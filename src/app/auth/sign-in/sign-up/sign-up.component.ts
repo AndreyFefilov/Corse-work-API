@@ -8,6 +8,7 @@ import { mergeMap, map, startWith, tap } from 'rxjs/operators';
 import { ClusterService } from '../../../_services/cluster.service';
 import { Cluster } from 'src/app/shared/models/cluster.model';
 import { RegStudent } from 'src/app/shared/models/reg.student.model';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,7 +21,8 @@ export class SignUpComponent implements OnInit {
     private formBuilder: FormBuilder,
     private clusterSrv: ClusterService,
     private authService: AuthService,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private titleService: Title
   ) { }
 
   form: FormGroup;
@@ -42,6 +44,8 @@ export class SignUpComponent implements OnInit {
   student = new RegStudent();
 
   ngOnInit() {
+    this.titleService.setTitle('Регистрация студента');
+
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],

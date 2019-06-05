@@ -1,7 +1,7 @@
 <div id="content">
-  <div id="add-div">
+  <div id="add-div"
+  *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ'">
     <div id="add"
-    *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ'"
     (click)="openNewDialog()"
     >
         <i class="material-icons" id="add-circle">

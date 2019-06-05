@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from './../../_services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sign-in',
@@ -22,10 +23,13 @@ export class SignInComponent implements OnInit {
     private userService: UserService,
     private alertify: AlertifyService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Авторизация');
+
     this.form = this.formBuilder.group({
       formUsername: '',
       formPassword: '',

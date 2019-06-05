@@ -39,7 +39,6 @@ export class MaterialsComponent implements OnInit {
         return 1;
       }
     });
-    console.log(this.materialService.materials);
   });
 }
 
@@ -51,9 +50,7 @@ export class MaterialsComponent implements OnInit {
     const dialogRef = this.dialog.open(NewMaterialComponent, {
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Диалог добавления материала закрыт');
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
   openUpdateDialog(event: MouseEvent, materialId: number, name: string, link: string ) {
@@ -64,9 +61,7 @@ export class MaterialsComponent implements OnInit {
     const dialogRef = this.dialog.open(UpdateMaterialComponent, {
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Диалог изменения материала закрыт');
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
   deleteMaterial(event: MouseEvent, materialId: number) {

@@ -1,3 +1,4 @@
+import { AlertifyService } from './../_services/alertify.service';
 import { MaterialService } from './../_services/material.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './../_services/user.service';
@@ -6,6 +7,7 @@ import { CourseService } from './../_services/course.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, Route, ActivatedRoute } from '@angular/router';
 import { CourseDialogComponent } from './course-dialog/course-dialog.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-page',
@@ -56,7 +58,7 @@ export class HomePageComponent implements OnInit {
   ];
 
   selectedItem: string;
-  id: number = this.authService.decodedToken.nameid;
+  id: number;
 
   constructor(
     private router: Router,
@@ -65,10 +67,15 @@ export class HomePageComponent implements OnInit {
     public authService: AuthService,
     public dialog: MatDialog,
     private courseService: CourseService,
-    private materilService: MaterialService
+    private materilService: MaterialService,
+    private alertify: AlertifyService,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Дисциплины ИПМКН');
+
+    this.id = this.authService.decodedToken.nameid;
 
     this.firstName = this.authService.decodedToken.family_name;
     this.lastName = this.authService.decodedToken.unique_name.substr(0, 1);
@@ -86,9 +93,9 @@ export class HomePageComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigate(['/auth']);
     localStorage.removeItem('token');
-    console.log('logged out');
+    this.router.navigate(['/auth']);
+    this.alertify.message('Выполнен выход из системы');
   }
 
   navigate(childRoute) {
@@ -99,9 +106,7 @@ export class HomePageComponent implements OnInit {
     const dialogRef = this.dialog.open(CourseDialogComponent, {
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog "Create course" was closed');
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
   toggleSelect() {
