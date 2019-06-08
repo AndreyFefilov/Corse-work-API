@@ -1,0 +1,25 @@
+<h1 mat-dialog-title
+style="margin: 0 auto; margin-bottom: 15px;">Вы уверены?</h1>
+<form>
+
+<div mat-dialog-content style="width: 200px; padding-right: 0;">
+</div>
+
+<div mat-dialog-actions
+style="margin: 0 auto;">
+  <button mat-flat-button color="warn"
+    (click)="deleteDiscipline()"
+    style="margin-right: 8px;">
+    <i class="material-icons"
+    id="delete-icon">
+      delete
+    </i>
+  </button>
+
+  <button mat-stroked-button
+  style="font-size: 16px;"
+  (click)="closeDialog()">
+     Отмена
+  </button>
+</div>
+</form>

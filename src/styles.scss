@@ -11,3 +11,12 @@
 button:focus, button:active {
     outline:0 none !important;
 }
+
+.mat-tab-label {
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.mat-tab-label-active {
+   font-size: 18px;
+}

@@ -40,11 +40,9 @@ export class SignInComponent implements OnInit {
     this.authService.login(this.model).subscribe(token => {
       this.alertify.success('Вход успешно выполнен');
 
-      this.userService.getUser(token).subscribe(user => {
-        this.userService.me = user;
-        this.router.navigate(['']);
-        console.log(this.userService.me);
-      });
+      this.userService.id = token;
+      this.router.navigate(['']);
+
     }, error => {
       this.alertify.error('Неправильный логин/почта или пароль');
     });

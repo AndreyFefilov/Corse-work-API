@@ -28,6 +28,7 @@ export class User {
     adNotify: string;
     artifactNotify: string;
     password: string;
-    resultNotify: string;
     clusterId: number;
+    resultNotify: string;
+    photoUrl: string;
 }

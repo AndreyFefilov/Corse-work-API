@@ -12,6 +12,7 @@ import { Course } from '../shared/models/course.model';
 
     myCourses: Course[] = [];
     selectCourseId: number;
+    currentCourse: Course;
 
     constructor(private http: HttpClient) { }
 
@@ -59,6 +60,23 @@ import { Course } from '../shared/models/course.model';
                 )
             );
     }
+
+    deleteCourse(id: number) {
+        return this.http.delete(this.baseUrl + `delete-course/${id}`);
+        }
+
+    updateCourse(id: number, model: any): Observable<Course> {
+        return this.http.put(this.baseUrl + `update-course/${id}`, model)
+            .pipe(
+                map((c: ICourse) => {
+                    const newCourse = new Course(
+                        c.id, c.name, c.description, c.formula
+                    );
+                    return newCourse;
+                    }
+                )
+            );
+        }
 
   }
 

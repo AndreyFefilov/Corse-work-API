@@ -20,12 +20,15 @@
 
         <div *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Студент'"
         id="username">
-            <a>{{firstName}} {{lastName}}.{{patronymic}}.</a>
+            <a id="fio" (click)="moveToProfile()"> 
+                {{firstName}} {{lastName}}.{{patronymic}}.</a>
         </div>
 
         <div *ngIf="authService.decodedToken.role == 'Админ'"
         id="username">
-            <a>{{firstName}}</a>
+            <a id="fio" (click)="moveToProfile()">
+                {{firstName}}
+            </a>
         </div>
 
         <img id="logout-icon" src="assets/images/logout.png" alt="иконка выхода"
@@ -44,20 +47,28 @@
                 </mat-select>
             </mat-form-field>
 
-            <i *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ'"
+            <i *ngIf="authService.decodedToken.role == 'Преподаватель'"
             class="material-icons" id="add-icon"
             (click)="openDialog()">add</i>
         </div>
 
 
-        <div
-            class="menu-item"
-            *ngFor="let item of menuItems"
-            (click)="selectedItem = item.value"
-            [ngClass]="{'selected': item.value === selectedItem }"
-        >
-            <span (click)="navigate(item.value)">{{item.text}}</span>
+        <ng-container *ngFor="let item of menuItems">
+                <div
+                class="menu-item"        
+                (click)="selectedItem = item.value"
+                [ngClass]="{'selected': item.value === selectedItem }"
+            >
+                <span (click)="navigate(item.value)">{{item.text}}</span>
+            </div>
+        </ng-container>
+
+        <div id="admin-menu"
+        *ngIf="authService.decodedToken.role == 'Админ'"
+        (click)="moveToAdmin()">
+            Меню администратора
         </div>
+
     </div>
 
 </div>
@@ -65,16 +76,30 @@
 <div>
     <ng-container *ngIf="show; else notShow">
         <div id="welcome-block">
-            <h3 style="text-align: center;">
+            <h3 style="text-align: center;"
+            *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Студент'">
                 Добро пожаловать, 
                 <span style="color: #0671b8;">
-                    {{authService.decodedToken.unique_name}} 
+                    {{authService.decodedToken.unique_name}}
                 {{authService.decodedToken.given_name}}
+                </span>
+            </h3>
+
+            <h3 style="text-align: center;"
+            *ngIf="authService.decodedToken.role == 'Админ'">
+                Вы вошли как
+                <span style="color: #b80606;">
+                    {{authService.decodedToken.family_name}}
                 </span>
             </h3>
                 <br>
             <h4 style="text-align: center;">
                 Чтобы начать, выберите дисциплину
+            </h4>
+            <h4 *ngIf="authService.decodedToken.role == 'Админ'"
+            style="text-align: center;">
+                ИЛИ <br>
+                откройте меню администратора
             </h4>
         </div>
     </ng-container>

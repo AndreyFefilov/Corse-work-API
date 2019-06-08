@@ -1,7 +1,7 @@
 #content {
     position: absolute;
     left: 290px;
-    width: 78%;
+    width: calc(100vw - 320px);
     padding: 20px 0 20px 10px;
 }
 
@@ -36,7 +36,7 @@
     font-weight: 400;
 }
 
-#pen-icon, #close-icon {
+#pen, #close-icon {
     color: white;
     padding-left: 3px;
     font-size: 24px;
@@ -47,7 +47,7 @@
     cursor: pointer;
     background-color: rgb(238, 247, 255);
 
-    #pen-icon, #close-icon {
+    #pen, #close-icon {
         color: rgb(207, 207, 207);
     }
 }
@@ -63,11 +63,11 @@
 }
 
 .hover-icon:hover {
-    #pen-icon {
+    #pen {
         color: rgb(134, 134, 134);
     }
     #close-icon {
-        color: rgb(124, 75, 75);
+        color: rgb(129, 39, 39);
     }   
 }
 

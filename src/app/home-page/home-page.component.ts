@@ -83,9 +83,14 @@ export class HomePageComponent implements OnInit {
 
     this.userService.getUser(this.id).subscribe(user => {
       this.userService.me = user;
+      console.log(this.userService.me);
     });
 
     this.loadCourses();
+
+    if (this.authService.decodedToken.role === 'Админ') {
+      this.menuItems = this.menuItems.filter(m => m.value !== 'artifacts');
+    }
   }
 
   loggedIn() {
@@ -182,7 +187,21 @@ export class HomePageComponent implements OnInit {
 
   changeCourse(event) {
     this.courseService.selectCourseId = event;
+    this.courseService.currentCourse = this.courseService.myCourses.find
+      (x => x.id === event);
 }
+
+  moveToProfile() {
+    this.router.navigate(['/profile']);
+    this.selectedItem = null;
+    this.show = false;
+  }
+
+  moveToAdmin() {
+    this.router.navigate(['/admin']);
+    this.selectedItem = null;
+    this.show = false;
+  }
 
 }
 

@@ -2,7 +2,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { AlertifyService } from './_services/alertify.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -19,8 +19,9 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatAutocompleteModule,
-  MatSelect,
-  MatSelectModule
+  MatSelectModule,
+  MatTabsModule,
+  MatTooltipModule
 } from '@angular/material';
 
 import { RouterModule } from '@angular/router';
@@ -41,6 +42,10 @@ import { MaterialsComponent } from './home-page/materials/materials.component';
 import { AdsComponent } from './home-page/ads/ads.component';
 import { NewMaterialComponent } from './home-page/materials/new-material/new-material.component';
 import { UpdateMaterialComponent } from './home-page/materials/update-material/update-material.component';
+import { UserService } from './_services/user.service';
+import { ProfileComponent } from './home-page/profile/profile.component';
+import { AdminMenuComponent } from './home-page/admin-menu/admin-menu.component';
+import { DeleteDisciplineComponent } from './home-page/discipline/delete-discipline/delete-discipline.component';
 
 @NgModule({
    declarations: [
@@ -57,6 +62,9 @@ import { UpdateMaterialComponent } from './home-page/materials/update-material/u
       AdsComponent,
       NewMaterialComponent,
       UpdateMaterialComponent,
+      ProfileComponent,
+      AdminMenuComponent,
+      DeleteDisciplineComponent,
    ],
    imports: [
       BrowserModule,
@@ -73,26 +81,30 @@ import { UpdateMaterialComponent } from './home-page/materials/update-material/u
       MatCardModule,
       MatDialogModule,
       MatFormFieldModule,
+      MatTabsModule,
       ReactiveFormsModule,
       CommonModule,
       MatInputModule,
       MatAutocompleteModule,
       MatSelectModule,
+      MatTooltipModule,
 
       RouterModule.forRoot(routes)
    ],
 
    providers: [
+      UserService,
       ErrorInterceptorProvider,
       AlertifyService,
       AuthGuard,
-      AuthService
+      AuthService,
    ],
 
    entryComponents: [
       CourseDialogComponent,
       NewMaterialComponent,
-      UpdateMaterialComponent
+      UpdateMaterialComponent,
+      DeleteDisciplineComponent
    ],
 
    bootstrap: [

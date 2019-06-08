@@ -1,0 +1,106 @@
+#content {
+    position: absolute;
+    left: 290px;
+    width: calc(100vw - 320px);
+    padding: 20px 0 20px 10px;
+}
+
+#div-name {
+    color: rgb(66, 66, 66);
+    position: relative;
+    margin: 5px 0 10px 0;
+    font-family: Roboto-Regular, sans-serif;
+}
+
+#name {
+    float: left;
+    display:flex;
+    margin: 10px 10px 30px 0;
+}
+
+#div-descrip {
+    position: relative;
+    color: rgb(99, 99, 99);
+    width: calc(100vw - 350px);
+    margin-bottom: 40px;
+    float: left;
+}
+
+#descrip {
+    padding: 5px 0 0 15px;
+}
+
+#descrip-header {
+    font-family: Roboto-Regular, sans-serif;
+    color: rgb(99, 99, 99);
+}
+
+#pen-icon {
+    display: inline-flex;
+    color: rgb(207, 207, 207);
+    padding-left: 3px;
+    font-size: 22px;
+    align-items: center;
+    padding-top: 16px;
+    transition: 0.2s;
+}
+
+#pen-icon:hover {
+    color: rgb(134, 134, 134);
+    cursor: pointer;
+}
+
+#done-icon {
+    display: inline-flex;
+    color: #077fcf;
+    padding-left: 3px;
+    font-size: 26px;
+    align-items: center;
+    padding-top: 17px;
+    transition: 0.2s;
+}
+#done-icon:hover {
+    color: #015186;
+    cursor: pointer;
+}
+
+
+.delete-block {
+    position: fixed;
+    bottom: 15px;
+    left: 290px;
+    font-size: 13px;
+    z-index: 50;
+}
+
+.delete-block:hover {
+    cursor: pointer;
+    color: rgb(129, 39, 39);
+}
+
+.example-button {
+    margin-top: 16px;
+  }
+  
+.example-tooltip-red {
+    background: #b71c1c;
+    position: relative;
+    right: 12px;
+    top: 3px;
+    font-size: 12px;
+  }
+
+#delete-icon {
+    color: rgb(187, 187, 187);
+}
+
+#mat-button {
+    min-width: 40px;
+    padding: 0 5px 0 5px;
+}
+
+#mat-button:hover {
+    #delete-icon {
+        color: #b71c1c;
+    }
+}

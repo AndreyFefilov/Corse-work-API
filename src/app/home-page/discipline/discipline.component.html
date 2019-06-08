@@ -1,3 +1,129 @@
-<p>
-  discipline works!
-</p>
+<div id="content">
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="О дисциплине">
+          <div class="info-box">
+            <div id="div-name">
+              <h2 id="name"
+              *ngIf="!showUpdate">
+                {{courseService.currentCourse.name}}
+              </h2>
+
+              <mat-form-field style="width: 370px; padding-bottom: 0; margin-right: 20px;
+              font-size: 1.2em"
+              [formGroup]="form"
+              *ngIf="showUpdate"> 
+                <input
+                required
+                matInput
+                type="text"
+                formControlName="formName"
+                autocomplete="off"
+                #input maxlength="40">
+                <mat-hint align="end">{{input.value?.length || 0}}/40</mat-hint>  
+              </mat-form-field>
+
+              <i class="material-icons"
+              id="pen-icon"
+              (click)="toggleShow()"
+              *ngIf="(authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ') && !showUpdate">
+                create
+              </i>
+
+              <i class="material-icons"
+              id="done-icon"
+              *ngIf="showUpdate"
+              (click)="updateCourse()"
+              style="position: relative;
+              top: 10px;">
+                done_all
+                </i>
+
+              <i class="material-icons"
+              id="pen-icon"
+              *ngIf="showUpdate"
+              style="position: relative;
+              top: 10px; margin-left: 10px; font-size: 26px;"
+              (click)="toggleShow()">
+                close
+                </i>
+            </div>
+
+            <div id="div-descrip">
+              
+              <h5 id="descrip-header">Описание</h5>
+
+              <mat-form-field style="width: 1000px; padding-bottom: 0;"
+              [formGroup]="form"
+              *ngIf="showUpdate"> 
+                <textarea
+                matInput
+                rows="7"
+                type="text"
+                formControlName="formDescription"
+                autocomplete="off"></textarea>
+              </mat-form-field>
+
+              <div id="descrip"
+              *ngIf="!showUpdate">
+                  {{courseService.currentCourse.description}}
+              </div>
+              <div id="descrip"
+              *ngIf="!courseService.currentCourse.description">
+                  Нет описания
+              </div>
+            </div>
+
+
+
+            
+            <div id="div-descrip">
+              
+                <h5 id="descrip-header">Формула расчёта итоговой оценки</h5>
+
+              <mat-form-field style="width: 550px; padding-bottom: 0;"
+              [formGroup]="form"
+              *ngIf="showUpdate"> 
+                <input
+                matInput
+                type="text"
+                formControlName="formFormula"
+                autocomplete="off">
+              </mat-form-field>
+
+                <div id="descrip"
+                *ngIf="!showUpdate">
+                    {{courseService.currentCourse.formula}}
+                </div>
+                <div id="descrip"
+                *ngIf="!courseService.currentCourse.formula"> 
+                    Формула не задана
+                </div>
+              </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Участники">
+          <div class="users-box">
+            Large content
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+</div>
+
+<div>
+
+  <div class="delete-block"
+  *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ'">
+      <button mat-stroked-button id="mat-button"
+      (click)="openDeleteDialog()"
+        matTooltip="Удаление дисциплины"
+        matTooltipClass="example-tooltip-red"
+        aria-label="Button that shows a red tooltip"
+        matTooltipPosition="right"
+        class="example-button">
+        <i class="material-icons"
+        id="delete-icon">
+          delete
+        </i>
+      </button>
+  </div>
+</div>
