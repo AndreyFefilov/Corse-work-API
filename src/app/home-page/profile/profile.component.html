@@ -1,3 +1,189 @@
-<p>
-  profile works!
-</p>
+<div id="profile-container">
+  <h2>
+    Мой профиль
+  </h2>
+  <hr id="profile-hr">
+
+  <div class="photo"
+  [style.background-image]="image">
+    <div class="options-panel">
+      <div id="options">
+          <i class="material-icons"
+          id="photo-icon">
+              add_a_photo
+              </i>
+        Новое фото
+      </div>
+      <div id="options"
+      *ngIf="userService.me.photoUrl">
+          <i class="material-icons"
+          id="photo-icon"
+          style="left: 2px; top: 6px;">
+              close
+              </i>
+          Удалить фото
+        </div>
+    </div>
+  </div>
+
+  <div id="data-content">
+    <div id="my-fio-block"
+    *ngIf="userService.me.role == 'Преподаватель' || userService.me.role == 'Студент'">
+      <h5 style="color: #212529">
+        ФИО
+      </h5>
+      <div style="font-size: 18px;
+      font-family: Roboto Light, sans-serif;
+      display: inline-block;">
+        {{userService.me.firstName}} 
+        {{userService.me.lastName}} 
+        {{userService.me.patronymic}}
+    </div>
+      <i class="material-icons"
+      id="pencil"
+      style="padding: 0;"
+      matTooltip="Изменить ФИО"
+      matTooltipPosition="right"
+      *ngIf="userService.me.role == 'Преподаватель' || userService.me.role == 'Студент'"
+      (click)="openNewNameDialog()">
+          create
+          </i>
+    </div>
+
+    <div id="my-fio-block"
+    *ngIf="userService.me.role == 'Админ'">
+      <h5 style="color: #212529">
+          {{userService.me.firstName}} 
+      </h5>
+    </div>
+
+    <hr class="simple-hr">
+
+    <div id="my-fio-block">
+      <h5 style="color: #212529">
+        Почта
+      </h5>
+      <div style="font-size: 18px;
+      font-family: Roboto Light, sans-serif;
+      display: inline-block;">
+        {{userService.me.email}} 
+    </div>
+    <i class="material-icons"
+    *ngIf="userService.me.confirmEmail == 'N'"
+      id="no-confirm-email"
+      matTooltip="Вы не подтвердили почту"
+      matTooltipPosition="right">
+      indeterminate_check_box
+          </i>
+          <i class="material-icons"
+          *ngIf="userService.me.confirmEmail == 'Y'"
+          id="confirm-email"
+          matTooltip="Почта подтверждена"
+          matTooltipPosition="right">
+          check_box
+          </i>
+    </div>
+
+    <hr class="simple-hr">
+
+  <form #userData="ngForm" [formGroup]="form" (ngSubmit)="updateUserData(userService.me)">
+    <div id="my-fio-block"
+    *ngIf="userService.me.role == 'Студент'">
+      <h5 style="color: #212529">
+        Учебная группа
+      </h5>
+
+      <mat-form-field
+      style="font-size: 17px;
+      margin-right: 15px;
+      width: 120px;
+      font-family: Roboto Light, sans-serif;"> 
+          <input
+          required
+          matInput
+          formControlName="group"
+          placeholder="Группа"
+          autocomplete="off"> 
+        </mat-form-field>
+
+        <mat-form-field
+        style="font-size: 17px; width: 80px;
+        font-family: Roboto Light, sans-serif;"> 
+            <input
+            required
+            matInput
+            formControlName="subGroup"
+            placeholder="Подгруппа"
+            autocomplete="off"> 
+          </mat-form-field>
+          <hr class="simple-hr">
+    </div>
+
+    <div id="my-fio-block">
+      <h5 style="color: #212529">
+        Почтовые уведомления
+      </h5>
+
+            <section class="ex-section"
+            *ngIf="userService.me.role == 'Студент'">
+              <mat-slide-toggle
+                  style="margin: 10px;"
+                  [checked]="checkedGrade"
+                  [color]="'primary'">
+              <span class="toggle-text">
+                  Результаты контрольных мероприятий
+              </span>           
+              </mat-slide-toggle>
+            </section>
+
+            <section class="ex-section"
+            *ngIf="userService.me.role != 'Админ'">
+              <mat-slide-toggle
+                  style="margin: 10px;"
+                  [checked]="checkedAd"
+                  [color]="'primary'">
+              <span class="toggle-text">
+                  Объявления
+              </span>           
+              </mat-slide-toggle>
+            </section>
+
+            <section class="ex-section">
+              <mat-slide-toggle
+                  style="margin: 10px;"
+                  [checked]="checkedMessage"
+                  [color]="'primary'">
+              <span class="toggle-text">
+                  Сообщения
+              </span>           
+              </mat-slide-toggle>
+            </section>
+
+            <section class="ex-section"
+            *ngIf="userService.me.role != 'Админ'">
+              <mat-slide-toggle
+                  style="margin: 10px;"
+                  [checked]="checkedArtifact"
+                  [color]="'primary'">
+              <span class="toggle-text">
+                  Артефакты
+              </span>           
+              </mat-slide-toggle>
+            </section>
+
+          <hr class="simple-hr">
+    </div> 
+
+
+    <div mat-dialog-actions>
+        <button mat-flat-button
+          class="log-but"
+          [disabled]="!userData.valid"
+          type="submit">
+            Сохранить изменения
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>

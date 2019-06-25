@@ -54,6 +54,7 @@
     bottom: 20px;
     left: 60px;
     transition: 0.2s;
+
 }
 
 #username:hover {
@@ -171,6 +172,7 @@
     text-align: center;
     justify-content: center;
     word-spacing: 50px;
+    z-index: 10;
 }
 
 #admin-menu:hover {
@@ -192,4 +194,31 @@
     position: absolute;
     left: 290px;
     width: calc(100vw - 320px);
+}
+
+#photo-div {
+    float: left;
+    position: relative;
+    right: 3px;
+    top: 6px;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+#photo-div:hover {
+    cursor: pointer;
+    transition-duration: 200ms;
+    border: 1px rgb(202, 202, 202) solid;
+}
+
+#blur-block {
+    position: absolute;
+    left: 30px;
+    top: 190px;
+    width: 200px;
+    height: 390px;
+    z-index: 5;
+    filter: blur(5px);
 }

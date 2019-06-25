@@ -38,6 +38,7 @@ export class NewMaterialComponent implements OnInit {
 
     this.materialService.createMaterial(this.material).subscribe(() => {
       this.alertify.success('Материал добавлен');
+      this.materialService.showNoMat = false;
     }, error => {
       this.alertify.error('Ошибка');
     });

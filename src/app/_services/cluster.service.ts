@@ -9,6 +9,10 @@ import { Cluster } from '../shared/models/cluster.model';
 })
 export class ClusterService {
 
+    allClusters: Cluster[] = [];
+    myGroup: string;
+    mySubGroup: string;
+
     constructor(private http: HttpClient) { }
 
     getAllClusters(): Observable<Cluster[]> {

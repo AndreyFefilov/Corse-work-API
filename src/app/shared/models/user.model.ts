@@ -11,9 +11,9 @@ export class User {
         this.messageNotify = data.messageNotify;
         this.adNotify = data.adNotify;
         this.artifactNotify = data.artifactNotify;
-        this.password = data.password;
         this.clusterId = data.clusterId;
         this.resultNotify = data.resultNotify;
+        this.photoUrl = data.photoUrl;
     }
 
     id: number;
@@ -27,7 +27,6 @@ export class User {
     messageNotify: string;
     adNotify: string;
     artifactNotify: string;
-    password: string;
     clusterId: number;
     resultNotify: string;
     photoUrl: string;

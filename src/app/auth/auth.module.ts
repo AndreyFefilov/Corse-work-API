@@ -23,7 +23,9 @@ import { SignUpComponent } from './sign-in/sign-up/sign-up.component';
   ],
   declarations: [
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
   ],
+  entryComponents: [
+ ],
 })
 export class AuthModule { }

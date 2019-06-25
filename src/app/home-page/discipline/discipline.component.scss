@@ -2,10 +2,11 @@
     position: absolute;
     left: 290px;
     width: calc(100vw - 320px);
-    padding: 20px 0 20px 10px;
+    padding: 5px 0 20px 10px;
+    font-family: Roboto-Regular, sans-serif;
 }
 
-#div-name {
+#div-name, #div-students {
     color: rgb(66, 66, 66);
     position: relative;
     margin: 5px 0 10px 0;
@@ -14,8 +15,7 @@
 
 #name {
     float: left;
-    display:flex;
-    margin: 10px 10px 30px 0;
+    display: flex;
 }
 
 #div-descrip {
@@ -38,10 +38,10 @@
 #pen-icon {
     display: inline-flex;
     color: rgb(207, 207, 207);
-    padding-left: 3px;
+    padding-left: 10px;
     font-size: 22px;
     align-items: center;
-    padding-top: 16px;
+    padding-top: 14px;
     transition: 0.2s;
 }
 
@@ -52,7 +52,7 @@
 
 #done-icon {
     display: inline-flex;
-    color: #077fcf;
+    color: rgb(207, 207, 207);
     padding-left: 3px;
     font-size: 26px;
     align-items: center;
@@ -60,7 +60,7 @@
     transition: 0.2s;
 }
 #done-icon:hover {
-    color: #015186;
+    color: #0671b8;
     cursor: pointer;
 }
 
@@ -90,8 +90,25 @@
     font-size: 12px;
   }
 
-#delete-icon {
+#delete-icon, #archive-icon {
+    position: relative;
+    top: 5px;
+    margin-right: 3px;
     color: rgb(187, 187, 187);
+}
+
+
+.menu-button {
+    display: flex;
+}
+
+.menu-button:hover {
+    #archive-icon {
+        color: #0671b8;
+    }
+    #delete-icon {
+        color: #b71c1c;
+    }
 }
 
 #mat-button {
@@ -103,4 +120,90 @@
     #delete-icon {
         color: #b71c1c;
     }
+}
+
+#discipline-menu {
+    position: relative;
+    float: right;
+    top: 10px;
+}
+
+#settings-icon {
+    color: rgb(124, 124, 124);
+}
+
+#plus-icon {
+    position: relative;
+    transition: 0.2s;
+    font-size: 29px;
+    color: rgb(141, 141, 141);
+    font-weight: lighter;
+    float: left;
+    margin-left: 5px;
+    display: inline-flex;
+    align-items: center;
+    top: 8px;
+}
+
+#plus-icon:hover {
+    cursor: pointer;
+    color: #0671b8;
+}
+
+hr {
+    background-color: #0671b8; 
+    color: #0671b8;
+    position: relative;
+    bottom: 8px;
+    margin-bottom: 0;
+}
+
+#remove-stud {
+    color: rgb(187, 187, 187);
+    opacity: 0;
+    margin-left: 5px;
+    font-size: 20px;
+}
+
+#stud-list, #teachers-list {
+    display: flex;
+    align-items: center;
+}
+
+#stud-list:hover, #teachers-list:hover {
+    #remove-stud{
+        opacity: 1;
+        cursor: pointer;
+    }
+    background-color: rgb(245, 245, 245);
+
+}
+
+#remove-stud:hover {
+    color: #b71c1c;
+}
+
+.mat-list-base {
+    padding-top: 0;
+}
+
+#line {
+    display: flex;
+    align-items: center;
+}
+
+.photo-block {
+    float: left;
+    text-align: center;
+    overflow: hidden;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+#main-star {
+    padding-left: 5px;
+    font-size: 22px;
+    color: #0671b8;
 }

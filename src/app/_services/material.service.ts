@@ -15,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
     selectedId: number;
     selectedName: string;
     selectedLink: string;
+    showNoMat: boolean;
 
     constructor(private http: HttpClient) { }
 

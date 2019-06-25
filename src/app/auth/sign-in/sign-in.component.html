@@ -19,7 +19,10 @@
   <div id="login-form">
   <mat-card class="mat-login"> 
     <mat-card-title style="text-align:center; margin: 10px 0 35px 0;">
-        <i id="in-icon" class="material-icons">input</i>
+        <i id="in-icon"
+        class="material-icons">
+          input
+        </i>
       Вход в систему
     </mat-card-title>
     <mat-card-content style="margin-bottom: 2px;">
@@ -31,11 +34,17 @@
         </mat-form-field>
         
         <br>
-        <i id="password-icon" class="material-icons">vpn_key</i>
+        <i id="password-icon"
+        class="material-icons">
+          vpn_key
+        </i>
         <mat-form-field style="margin-bottom: 30px; width:260px">
-          <input required class="log-input" type="password" matInput placeholder="Пароль"
-           formControlName="formPassword" passwordToggle
-           [(ngModel)]="model.password">
+          <input required class="log-input"
+            type="password"
+            matInput placeholder="Пароль"
+            formControlName="formPassword"
+            passwordToggle
+            [(ngModel)]="model.password">
         </mat-form-field>
         <div class="alert alert-danger" *ngIf="formError">{{formError}}</div>
         <br>
@@ -47,7 +56,14 @@
           Войти
         </button>
       </form>
-      <button mat-flat-button id="forget-pass"><u style="cursor: pointer">Забыли пароль?</u></button>
+
+      <button mat-flat-button id="forget-pass"
+      (click)="openDialog()">
+        <u style="cursor: pointer">
+          Забыли пароль?
+        </u>
+      </button>
+
     </mat-card-content>
   </mat-card>
 </div>

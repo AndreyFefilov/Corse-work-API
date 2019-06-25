@@ -1,3 +1,4 @@
+import { ClusterService } from './../_services/cluster.service';
 import { AlertifyService } from './../_services/alertify.service';
 import { MaterialService } from './../_services/material.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, Route, ActivatedRoute } from '@angular/router';
 import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 import { Title } from '@angular/platform-browser';
+import { Cluster } from '../shared/models/cluster.model';
 
 @Component({
   selector: 'app-home-page',
@@ -16,11 +18,19 @@ import { Title } from '@angular/platform-browser';
 })
 export class HomePageComponent implements OnInit {
 
+  myCluster: Cluster;
+
   firstName: string;
   lastName: string;
   patronymic: string;
 
   show = true;
+  showBlurBlock: boolean;
+
+  isMainTeacher = false;
+  mainTeacherId: number;
+
+  myPhotoUrl = 'assets/images/profile-photo.jpg';
 
   menuItems = [
     {
@@ -66,6 +76,7 @@ export class HomePageComponent implements OnInit {
     private userService: UserService,
     public authService: AuthService,
     public dialog: MatDialog,
+    private clusterService: ClusterService,
     private courseService: CourseService,
     private materilService: MaterialService,
     private alertify: AlertifyService,
@@ -73,9 +84,14 @@ export class HomePageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.titleService.setTitle('Дисциплины ИПМКН');
 
     this.id = this.authService.decodedToken.nameid;
+
+    this.courseService.myCourses = [];
+
+    this.showBlurBlock = true;
 
     this.firstName = this.authService.decodedToken.family_name;
     this.lastName = this.authService.decodedToken.unique_name.substr(0, 1);
@@ -84,6 +100,14 @@ export class HomePageComponent implements OnInit {
     this.userService.getUser(this.id).subscribe(user => {
       this.userService.me = user;
       console.log(this.userService.me);
+      if (this.userService.me.photoUrl !== null || this.userService.me.photoUrl !== '') {
+        this.myPhotoUrl = this.userService.me.photoUrl;
+        this.userService.photoUrl = this.userService.me.photoUrl;
+      } else {
+        this.myPhotoUrl = 'assets/images/profile-photo.jpg';
+        this.userService.photoUrl = 'assets/images/profile-photo.jpg';
+      }
+      this.loadClusters();
     });
 
     this.loadCourses();
@@ -91,6 +115,7 @@ export class HomePageComponent implements OnInit {
     if (this.authService.decodedToken.role === 'Админ') {
       this.menuItems = this.menuItems.filter(m => m.value !== 'artifacts');
     }
+
   }
 
   loggedIn() {
@@ -101,6 +126,8 @@ export class HomePageComponent implements OnInit {
     localStorage.removeItem('token');
     this.router.navigate(['/auth']);
     this.alertify.message('Выполнен выход из системы');
+    this.courseService.myCourses = [];
+    this.materilService.materials = [];
   }
 
   navigate(childRoute) {
@@ -116,6 +143,7 @@ export class HomePageComponent implements OnInit {
 
   toggleSelect() {
     this.show = false;
+    this.showBlurBlock = false;
     this.router.navigate(['/discipline']);
     this.selectedItem = 'discipline';
     this.materilService.materials = [];
@@ -147,18 +175,24 @@ export class HomePageComponent implements OnInit {
         this.courseService.getStudentCourses(this.id)
         .subscribe(courses => {
           this.courseService.myCourses = courses;
-          this.courseService.myCourses.sort((a, b) => {
-            // tslint:disable-next-line:prefer-const
-            let aname = a.name.toLowerCase();
-            // tslint:disable-next-line:prefer-const
-            let bname = b.name.toLowerCase();
-            if (aname < bname) {
-              return -1;
-            }
-            if (aname > bname) {
-              return 1;
-            }
-          });
+
+          if (this.courseService.myCourses.length !== 0) {
+            this.courseService.myCourses.sort((a, b) => {
+              // tslint:disable-next-line:prefer-const
+              let aname = a.name.toLowerCase();
+              // tslint:disable-next-line:prefer-const
+              let bname = b.name.toLowerCase();
+              if (aname < bname) {
+                return -1;
+              }
+              if (aname > bname) {
+                return 1;
+              }
+            });
+          } else {
+            this.alertify.warning('Вас ещё не записали ни на одну дисциплину');
+          }
+
         });
         break;
       }
@@ -185,10 +219,35 @@ export class HomePageComponent implements OnInit {
     }
   }
 
+  loadClusters() {
+    this.clusterService.getAllClusters()
+    .subscribe(clusters => {
+      this.clusterService.allClusters = clusters;
+      console.log(this.clusterService.allClusters);
+      if (this.userService.me.role === 'Студент') {
+        this.myCluster = this.clusterService.allClusters
+          .find(cluster => cluster.id === this.userService.me.clusterId);
+        console.log(this.myCluster);
+
+        if (this.myCluster != null) {
+          this.clusterService.myGroup = this.myCluster.group;
+          this.clusterService.mySubGroup = this.myCluster.subGroup;
+        } else {
+          return;
+        }
+      }
+
+
+  });
+}
+
   changeCourse(event) {
     this.courseService.selectCourseId = event;
     this.courseService.currentCourse = this.courseService.myCourses.find
       (x => x.id === event);
+    this.userService.isMainTeacher = false;
+    this.loadStudents();
+    this.loadTeachers();
 }
 
   moveToProfile() {
@@ -202,6 +261,43 @@ export class HomePageComponent implements OnInit {
     this.selectedItem = null;
     this.show = false;
   }
+
+  loadTeachers() {
+    this.userService.getCourseTeachers(this.courseService.selectCourseId)
+    .subscribe(teachers => {
+      this.userService.courseTeachers = teachers;
+      console.log(this.userService.courseTeachers);
+      this.checkMainTeacher();
+      const mainTeacher = this.userService.courseTeachers.find(x => x.main === 'Y');
+      this.userService.mainTeacherId = mainTeacher.id;
+  });
+
+}
+
+loadStudents() {
+    this.userService.getCourseStudents(this.courseService.selectCourseId)
+    .subscribe(students => {
+      this.userService.courseStudents = students;
+      console.log(this.userService.courseStudents);
+      this.userService.$studentsLoaded.next(students);
+  });
+}
+
+
+checkMainTeacher() {
+  if (this.authService.decodedToken.role === 'Преподаватель') {
+    const mainTeacher = this.userService.courseTeachers.find
+    (x => x.main === 'Y');
+    if (mainTeacher.id === this.userService.me.id) {
+      this.userService.isMainTeacher = true;
+      } else {
+        this.userService.isMainTeacher = false;
+        return;
+      }
+  } else {
+    return;
+  }
+}
 
 }
 

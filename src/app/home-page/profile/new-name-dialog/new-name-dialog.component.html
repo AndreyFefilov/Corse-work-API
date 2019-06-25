@@ -1,0 +1,62 @@
+<h1 mat-dialog-title style="margin-bottom: 0;">
+  <i class="material-icons"
+  style="position: relative; top: 5px;">
+    font_download
+    </i>
+    Изменение ФИО
+  </h1>
+
+<i class="material-icons"
+id="close-btn"
+(click)="closeDialog()"
+style="bottom: 45px;">
+  close
+</i>
+<form #NewNameDialog="ngForm" [formGroup]="form" (ngSubmit)="changeFullName()">
+
+<div mat-dialog-content
+  style="width: 370px; padding-right: 10px;">
+  <p>Запрос изменения ФИО будет отправлен администратору на рассмотрение</p>
+
+  <mat-form-field style="width: 300px; padding-bottom: 0; margin: 0;"> 
+    <input
+    required
+    matInput
+    formControlName="firstName"
+    placeholder="Фамилия"
+    autocomplete="off"
+    #message1 maxlength="30">
+    <mat-hint align="end">{{message1.value.length}} / 30</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field style="width: 300px; padding-bottom: 0; margin: 0;"> 
+      <input
+      required
+      matInput
+      formControlName="lastName"
+      placeholder="Имя"
+      autocomplete="off"
+      #message2 maxlength="30"> 
+    <mat-hint align="end">{{message2.value.length}} / 30</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field style="width: 300px; padding-bottom: 0; margin: 0;"> 
+        <input
+        required
+        matInput
+        formControlName="patronymic"
+        placeholder="Отчество"
+        autocomplete="off"
+        #message3 maxlength="30"> 
+      <mat-hint align="end">{{message3.value.length}} / 30</mat-hint>
+      </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button
+    class="log-but"
+    [disabled]="!NewNameDialog.valid"
+    type="submit">
+      Отправить запрос
+  </button>
+</div>
+</form>

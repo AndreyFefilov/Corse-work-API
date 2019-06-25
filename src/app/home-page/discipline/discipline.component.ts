@@ -1,11 +1,15 @@
+import { Subscription } from 'rxjs';
+import { UserService } from './../../_services/user.service';
 import { AlertifyService } from './../../_services/alertify.service';
 import { CourseService } from './../../_services/course.service';
 import { AuthService } from './../../_services/auth.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialog} from '@angular/material';
 import { DeleteDisciplineComponent } from './delete-discipline/delete-discipline.component';
 import { Course } from 'src/app/shared/models/course.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { User } from 'src/app/shared/models/user.model';
+import { Student } from 'src/app/shared/models/student.model';
 
 
 @Component({
@@ -14,7 +18,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./discipline.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class DisciplineComponent implements OnInit {
+export class DisciplineComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
@@ -23,11 +27,22 @@ export class DisciplineComponent implements OnInit {
   description: string;
   formula: string;
 
+  isMainTeacher = false;
+  mainTeacherId: number;
+
+  noStudents: boolean;
+
+  groupMap: Map<string, Student[]> = new Map();
+  studentsAndGroups: any;
+
+  studentsSubs: Subscription;
+
   constructor(
               private formBuilder: FormBuilder,
               private courseService: CourseService,
               private authService: AuthService,
               private alertify: AlertifyService,
+              private userService: UserService,
               public dialog: MatDialog
              ) { }
 
@@ -44,6 +59,31 @@ export class DisciplineComponent implements OnInit {
       formDescription: this.courseService.currentCourse.description,
       formFormula: this.courseService.currentCourse.formula,
     });
+
+    this.studentsSubs = this.userService.$studentsLoaded.subscribe(students => {
+
+      this.groupMap = new Map();
+
+      for (const student of this.userService.courseStudents) {
+        const groupStudents = this.groupMap.get(student.group);
+        if (!groupStudents) {
+          this.groupMap.set(student.group, [student]);
+        } else {
+          groupStudents.push(student);
+        }
+      }
+
+      this.studentsAndGroups = Array.from(this.groupMap.entries()).sort();
+
+    });
+    this.loadStudents();
+    this.loadTeachers();
+  }
+
+  ngOnDestroy() {
+    if (this.studentsSubs) {
+      this.studentsSubs.unsubscribe();
+    }
   }
 
   openDeleteDialog() {
@@ -97,6 +137,40 @@ export class DisciplineComponent implements OnInit {
 
   toggleShowTab() {
     this.showUpdate = false;
+  }
+
+  loadStudents() {
+    this.userService.getCourseStudents(this.courseService.selectCourseId)
+    .subscribe(students => {
+      this.userService.courseStudents = students;
+      console.log(this.userService.courseStudents);
+      this.userService.$studentsLoaded.next(students);
+  });
+}
+
+  loadTeachers() {
+      this.userService.getCourseTeachers(this.courseService.selectCourseId)
+      .subscribe(teachers => {
+        this.userService.courseTeachers = teachers;
+        console.log(this.userService.courseTeachers);
+        this.checkMainTeacher();
+    });
+  }
+
+  checkMainTeacher() {
+    if (this.authService.decodedToken.role === 'Преподаватель') {
+      const mainTeacher = this.userService.courseTeachers.find
+      (x => x.main === 'Y');
+      if (mainTeacher.id === this.userService.me.id) {
+          this.isMainTeacher = true;
+          this.mainTeacherId = mainTeacher.id;
+        } else {
+          this.isMainTeacher = false;
+          return;
+        }
+    } else {
+      return;
+    }
   }
 
 }

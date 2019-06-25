@@ -6,6 +6,8 @@ import { AuthService } from './../../_services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -24,7 +26,8 @@ export class SignInComponent implements OnInit {
     private alertify: AlertifyService,
     private http: HttpClient,
     private router: Router,
-    private titleService: Title
+    private titleService: Title,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -34,6 +37,8 @@ export class SignInComponent implements OnInit {
       formUsername: '',
       formPassword: '',
     });
+
+    this.userService.photoUrl = null;
   }
 
   login() {
@@ -42,10 +47,17 @@ export class SignInComponent implements OnInit {
 
       this.userService.id = token;
       this.router.navigate(['']);
+      this.userService.photoUrl = null;
 
     }, error => {
       this.alertify.error('Неправильный логин/почта или пароль');
     });
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(PasswordRecoveryComponent, {
+    });
+    dialogRef.afterClosed().subscribe();
   }
 
 }

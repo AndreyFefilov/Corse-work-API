@@ -14,6 +14,11 @@
       </div>
   </div>
 
+  <div *ngIf="this.materialService.showNoMat"
+  id="nomat-block">
+      Нет материалов
+  </div>
+
   <div class="mat-card-div"
   *ngFor="let material of materialService.materials">
     <mat-card

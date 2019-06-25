@@ -13,6 +13,8 @@ import { UpdateMaterialComponent } from './update-material/update-material.compo
 })
 export class MaterialsComponent implements OnInit {
 
+  static noMaterials: boolean;
+
   constructor(private materialService: MaterialService,
               private courseService: CourseService,
               private authService: AuthService,
@@ -27,18 +29,24 @@ export class MaterialsComponent implements OnInit {
   this.materialService.getCourseMaterials(this.courseService.selectCourseId)
   .subscribe(materials => {
     this.materialService.materials = materials;
-    this.materialService.materials.sort((a, b) => {
-      // tslint:disable-next-line:prefer-const
-      let aname = a.name.toLowerCase();
-      // tslint:disable-next-line:prefer-const
-      let bname = b.name.toLowerCase();
-      if (aname < bname) {
-        return -1;
-      }
-      if (aname > bname) {
-        return 1;
-      }
-    });
+    if (this.materialService.materials.length !== 0) {
+      this.materialService.showNoMat = false;
+      this.materialService.materials.sort((a, b) => {
+        // tslint:disable-next-line:prefer-const
+        let aname = a.name.toLowerCase();
+        // tslint:disable-next-line:prefer-const
+        let bname = b.name.toLowerCase();
+        if (aname < bname) {
+          return -1;
+        }
+        if (aname > bname) {
+          return 1;
+        }
+      });
+    } else {
+      this.materialService.showNoMat = true;
+    }
+
   });
 }
 

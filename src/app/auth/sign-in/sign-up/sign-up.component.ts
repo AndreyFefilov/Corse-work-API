@@ -9,6 +9,7 @@ import { ClusterService } from '../../../_services/cluster.service';
 import { Cluster } from 'src/app/shared/models/cluster.model';
 import { RegStudent } from 'src/app/shared/models/reg.student.model';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -22,7 +23,8 @@ export class SignUpComponent implements OnInit {
     private clusterSrv: ClusterService,
     private authService: AuthService,
     private alertify: AlertifyService,
-    private titleService: Title
+    private titleService: Title,
+    private router: Router
   ) { }
 
   form: FormGroup;
@@ -179,6 +181,7 @@ export class SignUpComponent implements OnInit {
 
     this.authService.register(this.student).subscribe(() => {
       this.alertify.success('Регистрация прошла успешно');
+      this.router.navigate(['/auth']);
     }, error => {
       this.alertify.error('Такие логин или почта уже заняты');
     });

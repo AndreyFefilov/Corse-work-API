@@ -1,12 +1,37 @@
 <div id="content">
+
+    <div id="discipline-menu"
+    *ngIf="userService.isMainTeacher || authService.decodedToken.role == 'Админ'">
+        <button mat-icon-button [matMenuTriggerFor]="menu"
+        aria-label="Меню дисциплины"
+        id="settings-icon">
+            <i class="material-icons">settings</i>
+          </button>
+          <mat-menu #menu="matMenu">
+              <button mat-menu-item class="menu-button"
+              *ngIf="userService.isMainTeacher">
+                  <i class="material-icons" id="archive-icon">archive</i>
+                  <span>Добавить в архив</span>
+              </button>
+            <button mat-menu-item class="menu-button"
+            (click)="openDeleteDialog()">
+                <i class="material-icons" id="delete-icon">delete</i>
+              <span>Удалить дисциплину</span>
+            </button>
+          </mat-menu>
+        </div>
+
     <mat-tab-group dynamicHeight>
         <mat-tab label="О дисциплине">
           <div class="info-box">
-            <div id="div-name">
-              <h2 id="name"
+            <div id="div-name"
+            style="margin-top: 11px;
+            width: 800px;">
+              <h3 id="name"
+              style="margin-top: 5px;"
               *ngIf="!showUpdate">
                 {{courseService.currentCourse.name}}
-              </h2>
+              </h3>
 
               <mat-form-field style="width: 370px; padding-bottom: 0; margin-right: 20px;
               font-size: 1.2em"
@@ -24,6 +49,9 @@
 
               <i class="material-icons"
               id="pen-icon"
+              style="position: relative;
+              top: 8px;
+              padding-top: 0;"
               (click)="toggleShow()"
               *ngIf="(authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ') && !showUpdate">
                 create
@@ -35,7 +63,7 @@
               (click)="updateCourse()"
               style="position: relative;
               top: 10px;">
-                done_all
+                check_circle
                 </i>
 
               <i class="material-icons"
@@ -46,11 +74,20 @@
               (click)="toggleShow()">
                 close
                 </i>
+
+            </div>
+            <div style="clear: both"></div>
+
+            <div style="width: 800px;">
+              <hr *ngIf="!showUpdate">
             </div>
 
             <div id="div-descrip">
               
-              <h5 id="descrip-header">Описание</h5>
+              <h5 id="descrip-header"
+                style="margin-top: 15px;">
+                  Описание
+            </h5>
 
               <mat-form-field style="width: 1000px; padding-bottom: 0;"
               [formGroup]="form"
@@ -101,29 +138,152 @@
               </div>
           </div>
         </mat-tab>
+
         <mat-tab label="Участники">
-          <div class="users-box">
-            Large content
-          </div>
+                <div id="div-name"
+                style="margin-top: 15px;
+                margin-bottom: 0;
+                width: 800px;">
+                    <h5
+                    style="display: inline-flex;">
+                      Преподаватели
+                    </h5>
+      
+                    <i class="material-icons"
+                    id="plus-icon"
+                    style="float: none;"
+                    matTooltip="Добавить преподавателя"
+                    matTooltipPosition="right"
+                    *ngIf="isMainTeacher || authService.decodedToken.role == 'Админ'">
+                      add
+                    </i>
+                    <hr>
+                    <mat-list *ngIf="isMainTeacher">
+                        <mat-list-item *ngFor="let teacher of userService.courseTeachers">
+                            <div id="teachers-list" 
+                            mat-line>
+                            <div class="photo-block">
+                              <app-photo [photoUrl]="teacher.photoUrl"></app-photo>
+                            </div>
+                            {{teacher.firstName}}
+                                {{teacher.lastName}}
+                                {{teacher.patronymic}}
+                                <i class="material-icons"
+                                id="main-star"
+                                *ngIf="userService.mainTeacherId == teacher.id"
+                                  matTooltip="Вы - создатель дисциплины"
+                                  matTooltipPosition="right">
+                                  stars
+                                </i>
+
+                                <i class="material-icons"
+                                *ngIf="userService.mainTeacherId != teacher.id"
+                                id="remove-stud"
+                                matTooltip="Исключить с дисциплины"
+                                matTooltipPosition="right">
+                                    remove_circle
+                                </i>
+
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+
+                    <mat-list *ngIf="!isMainTeacher">
+                        <mat-list-item *ngFor="let teacher of userService.courseTeachers">
+                            <div mat-line
+                            id="line">
+                                <div class="photo-block">
+                                  <app-photo [photoUrl]="teacher.photoUrl"></app-photo>
+                                </div>
+                              {{teacher.firstName}}
+                                {{teacher.lastName}}
+                                {{teacher.patronymic}}
+                                <i class="material-icons"
+                                id="main-star"
+                                *ngIf="userService.mainTeacherId == teacher.id"
+                                  matTooltip="Создатель дисциплины"
+                                  matTooltipPosition="right">
+                                  stars
+                                </i>
+
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+
+                  </div>
+
+                  <div id="div-students"
+                  style="width: 800px;
+                         margin-bottom: 0;">
+                      <h5
+                      style="display: inline-flex;">
+                        Студенты
+                      </h5>
+        
+                      <i class="material-icons"
+                      id="plus-icon"
+                      style="float: none;"
+                      matTooltip="Записать студентов"
+                      matTooltipPosition="right"
+                      *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ'">
+                        add
+                      </i>
+
+                      <hr>
+                      <div style="height: 10px;"></div>
+
+                    <div *ngFor="let group of studentsAndGroups"> 
+                      <div id="descrip-header" style="font-size: 18px;">
+                          {{group[0]}}
+                      </div>
+
+                      <mat-list 
+                      *ngIf="authService.decodedToken.role == 'Преподаватель'"> 
+                          <mat-list-item
+                          *ngFor="let student of group[1]"> 
+                              <div id="stud-list"
+                              mat-line>
+                              <div class="photo-block">
+                                <app-photo [photoUrl]="student.photoUrl"></app-photo>
+                              </div>
+                              {{student.firstName}}
+                                  {{student.lastName}}
+                                  {{student.patronymic}}
+
+                                  <i class="material-icons"
+                                  id="remove-stud"
+                                  matTooltip="Исключить с дисциплины"
+                                  matTooltipPosition="right">
+                                      remove_circle
+                                  </i>
+                              </div>
+                          </mat-list-item>
+                      </mat-list>
+                      <mat-list
+                      *ngIf="authService.decodedToken.role == 'Студент' || authService.decodedToken.role == 'Админ'">
+                          <mat-list-item
+                          *ngFor="let student of group[1]"> 
+                              <div mat-line
+                              id="line">
+                              <div class="photo-block">
+                                <app-photo [photoUrl]="student.photoUrl"></app-photo>
+                              </div>
+                              {{student.firstName}}
+                                  {{student.lastName}}
+                                  {{student.patronymic}}
+                              </div>
+                          </mat-list-item>
+                      </mat-list>
+                      <div style="height: 15px;"></div>
+                    </div>
+                    <p *ngIf="userService.courseStudents.length == 0"
+                    id="descrip-header">
+                      На данной дисциплине нет студентов
+                    </p>
+                  </div>
+
         </mat-tab>
+
       </mat-tab-group>
 </div>
 
-<div>
-
-  <div class="delete-block"
-  *ngIf="authService.decodedToken.role == 'Преподаватель' || authService.decodedToken.role == 'Админ'">
-      <button mat-stroked-button id="mat-button"
-      (click)="openDeleteDialog()"
-        matTooltip="Удаление дисциплины"
-        matTooltipClass="example-tooltip-red"
-        aria-label="Button that shows a red tooltip"
-        matTooltipPosition="right"
-        class="example-button">
-        <i class="material-icons"
-        id="delete-icon">
-          delete
-        </i>
-      </button>
-  </div>
-</div>

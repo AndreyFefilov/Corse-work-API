@@ -1,3 +1,4 @@
+import { PasswordRecoveryComponent } from './auth/sign-in/password-recovery/password-recovery.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { AlertifyService } from './_services/alertify.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,7 +22,9 @@ import {
   MatAutocompleteModule,
   MatSelectModule,
   MatTabsModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatListModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 import { RouterModule } from '@angular/router';
@@ -46,6 +49,14 @@ import { UserService } from './_services/user.service';
 import { ProfileComponent } from './home-page/profile/profile.component';
 import { AdminMenuComponent } from './home-page/admin-menu/admin-menu.component';
 import { DeleteDisciplineComponent } from './home-page/discipline/delete-discipline/delete-discipline.component';
+import { PhotoComponent } from './home-page/photo/photo.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { config } from 'rxjs';
+import { NewNameDialogComponent } from './home-page/profile/new-name-dialog/new-name-dialog.component';
+
+export function tokenGetter() {
+   return localStorage.getItem('token');
+}
 
 @NgModule({
    declarations: [
@@ -65,6 +76,9 @@ import { DeleteDisciplineComponent } from './home-page/discipline/delete-discipl
       ProfileComponent,
       AdminMenuComponent,
       DeleteDisciplineComponent,
+      PasswordRecoveryComponent,
+      PhotoComponent,
+      NewNameDialogComponent
    ],
    imports: [
       BrowserModule,
@@ -88,6 +102,15 @@ import { DeleteDisciplineComponent } from './home-page/discipline/delete-discipl
       MatAutocompleteModule,
       MatSelectModule,
       MatTooltipModule,
+      MatListModule,
+      MatSlideToggleModule,
+      JwtModule.forRoot({
+         config: {
+            tokenGetter,
+            whitelistedDomains: ['localhost:5000'],
+            blacklistedRoutes: ['localhost:5000/api/auth']
+         }
+      }),
 
       RouterModule.forRoot(routes)
    ],
@@ -104,7 +127,9 @@ import { DeleteDisciplineComponent } from './home-page/discipline/delete-discipl
       CourseDialogComponent,
       NewMaterialComponent,
       UpdateMaterialComponent,
-      DeleteDisciplineComponent
+      DeleteDisciplineComponent,
+      PasswordRecoveryComponent,
+      NewNameDialogComponent
    ],
 
    bootstrap: [
